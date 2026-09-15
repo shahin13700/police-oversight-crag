@@ -1,0 +1,86 @@
+[
+  {
+    "id": 1,
+    "category": "Foundational Oversight and QA",
+    "prompt": "Based on public legislation and oversight guidance, what quality assurance expectations apply to police services in Ontario?",
+    "expected_topics": ["adequate and effective policing", "CSPA", "standards", "regulations", "police service board"],
+    "expected_citations": ["CSPA s.11"]
+  },
+  {
+    "id": 2,
+    "category": "Foundational Oversight and QA",
+    "prompt": "Which public oversight bodies oversee police services in Ontario, and what quality or accountability expectations do they impose?",
+    "expected_topics": ["Inspector General", "Inspectorate", "LECA", "police service board", "oversight"],
+    "expected_citations": ["CSPA s.103", "CSPA s.125"]
+  },
+  {
+    "id": 3,
+    "category": "Inspectorate of Policing",
+    "prompt": "What types of compliance or quality reviews can the Inspectorate of Policing conduct under public legislation?",
+    "expected_topics": ["inspection", "compliance", "Inspector General", "direction", "non-compliance"],
+    "expected_citations": ["CSPA s.103", "CSPA s.125"]
+  },
+  {
+    "id": 4,
+    "category": "Inspectorate of Policing",
+    "prompt": "What types of public evidence would typically demonstrate readiness for an Inspectorate of Policing inspection?",
+    "expected_topics": ["inspection", "compliance", "policies", "records", "Inspector General"],
+    "expected_citations": ["CSPA s.103", "CSPA s.125"]
+  },
+  {
+    "id": 5,
+    "category": "LECA / Complaints and Professional Standards",
+    "prompt": "What quality assurance expectations arise from the Law Enforcement Complaints Agency (LECA) framework?",
+    "expected_topics": ["complaints", "Complaints Director", "investigation", "oversight", "timeliness"],
+    "expected_citations": ["CSPA s.76", "CSPA s.175"]
+  },
+  {
+    "id": 6,
+    "category": "LECA / Complaints and Professional Standards",
+    "prompt": "How do public complaints frameworks contribute to quality assurance and continuous improvement in policing?",
+    "expected_topics": ["complaints", "feedback", "accountability", "improvement", "Complaints Director"],
+    "expected_citations": ["CSPA s.76", "CSPA s.175"]
+  },
+  {
+    "id": 7,
+    "category": "Risk, Monitoring, and Continuous Improvement",
+    "prompt": "Does public legislation require or imply expectations related to risk identification or monitoring in policing, and how are these reflected in oversight activities?",
+    "expected_topics": ["monitoring", "inspection", "risk", "oversight", "compliance"],
+    "expected_citations": ["CSPA s.103", "CSPA s.11"]
+  },
+  {
+    "id": 8,
+    "category": "Risk, Monitoring, and Continuous Improvement",
+    "prompt": "How does Ontario's public police oversight framework support continuous improvement?",
+    "expected_topics": ["inspections", "recommendations", "oversight", "accountability", "improvement"],
+    "expected_citations": ["CSPA s.103", "CSPA s.125"]
+  },
+  {
+    "id": 9,
+    "category": "QA Checklists",
+    "prompt": "For public complaints handling, generate a quality assurance checklist or series of review questions based on public legislation and oversight guidance.",
+    "expected_topics": ["complaints", "checklist", "review", "Complaints Director", "timeliness"],
+    "expected_citations": ["CSPA s.76", "CSPA s.175"]
+  },
+  {
+    "id": 10,
+    "category": "QA Checklists",
+    "prompt": "Generate a QA line of inquiry for use of force, based solely on public legislative and oversight expectations.",
+    "expected_topics": ["use of force", "documentation", "review", "accountability", "monitoring"],
+    "expected_citations": ["CSPA s.138", "CSPA s.139"]
+  },
+  {
+    "id": 11,
+    "category": "QA Checklists",
+    "prompt": "What quality assurance questions should be asked when reviewing police investigative practices, using public sources only?",
+    "expected_topics": ["investigation", "supervision", "timeliness", "consistency", "accountability"],
+    "expected_citations": ["CSPA s.198", "CSPA s.175"]
+  },
+  {
+    "id": 12,
+    "category": "QA Checklists",
+    "prompt": "Create a public-source-based QA checklist for detention or custody management.",
+    "expected_topics": ["detention", "custody", "safeguards", "monitoring", "legislative"],
+    "expected_citations": ["CSPA s.183"]
+  }
+]

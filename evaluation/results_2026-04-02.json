@@ -1,0 +1,535 @@
+{
+  "date": "2026-04-02",
+  "accuracy": 1.0,
+  "passed": 12,
+  "total": 12,
+  "results": [
+    {
+      "id": 1,
+      "category": "Foundational Oversight and QA",
+      "prompt": "Based on public legislation and oversight guidance, what quality assurance expectations apply to police services in Ontario?",
+      "answer": "Based on the provided legislative sections, the following quality assurance expectations apply to police services in Ontario:\n\n1.  **Mandatory Quality Assurance Process:** Every police service board and every chief of police shall implement a quality assurance process [O. Reg. 392/23 s.23].\n2.  **Scope of Quality Assurance:** The implemented process must relate to the provision of adequate and effective policing [O. Reg. 392/23 s.23(a)].\n3.  **Regulatory Compliance:** The quality assurance process must also relate to compliance with the Act and the regulations [O. Reg. 392/23 s.23(b)].\n4.  **Foundational Policing Principles:** Policing shall be provided in accordance with principles including ensuring safety and security, safeguarding Charter rights and freedoms, co-operation with communities, respect for victims, sensitivity to multicultural character, responsiveness to Indigenous communities, representativeness, and equitable levels of policing [CSPA s.1].\n5.  **French Language Services:** While the Law Enforcement Complaints Agency (LECA) is committed to complying with the French Language Services Act (FLSA), the FLSA does not legislate responsibilities upon individual municipalities to provide French language services unless a municipality chooses to do so of its own accord [LECA Guideline 011 — French Language Complaints — Purpose].\n6.  **First Nation Policing Agreements:** Where agreements exist for policing on First Nation reserves, optional contents may include steps taken to ensure services reflect the cultural traditions of the First Nation [CSPA s.76(3)].\n\n### Sources\n*   O. Reg. 392/23 s.23 — Quality assurance\n*   CSPA s.1 — Declaration of principles\n*   LECA Guideline 011 — French Language Complaints — Purpose\n*   CSPA s.76(3) — Optional contents",
+      "expected_citations": [
+        "CSPA s.11"
+      ],
+      "expected_topics": [
+        "adequate and effective policing",
+        "CSPA",
+        "standards",
+        "regulations",
+        "police service board"
+      ],
+      "llm_judge": {
+        "faithfulness": 1.0,
+        "relevance": 1.0,
+        "completeness": 1.0,
+        "average": 1.0
+      },
+      "citation_passed": true,
+      "citation_found": [
+        "[O. Reg. 392/23 s.23]",
+        "CSPA s.76(3)",
+        "LECA Guideline 011",
+        "[O. Reg. 392/23 s.23(a)]",
+        "[CSPA s.1]",
+        "[CSPA s.76(3)]",
+        "O. Reg. 392/23 s.23",
+        "CSPA s.1",
+        "[LECA Guideline 011",
+        "[O. Reg. 392/23 s.23(b)]"
+      ],
+      "topic_score": 0.8,
+      "topics_found": [
+        "adequate and effective policing",
+        "CSPA",
+        "regulations",
+        "police service board"
+      ],
+      "overall_score": 0.9,
+      "passed": true
+    },
+    {
+      "id": 2,
+      "category": "Foundational Oversight and QA",
+      "prompt": "Which public oversight bodies oversee police services in Ontario, and what quality or accountability expectations do they impose?",
+      "answer": "Based on the provided legislative sections, the following public oversight bodies and accountability expectations are identified:\n\n**Public Oversight Bodies**\n1.  **Law Enforcement Complaints Agency (LECA):** Explicitly identified as playing an important role in overseeing and investigating police misconduct in Ontario [LECA Guideline 011 — French Language Complaints — Purpose — Purpose].\n2.  **Defined Oversight Roles:** The legislation defines several entities involved in the policing framework, including the Arbitration and Adjudication Commission, Complaints Director, Inspector General of Policing, and Special Investigations Unit (SIU) Director, though their specific oversight functions are not detailed in the provided excerpts [CSPA s.2(1)].\n3.  **Police Service Boards:** Municipal boards and First Nation boards are defined as entities that maintain police services [CSPA s.2(1)].\n\n**Quality and Accountability Expectations**\n1.  **Declaration of Principles:** Policing must be provided in accordance with principles including safety and security, safeguarding Charter rights, co-operation with communities, respect for victims, sensitivity to multicultural character, responsiveness to Indigenous histories, representativeness, and equitable levels of policing [CSPA s.1].\n2.  **Misconduct Compliance:** Accountability is enforced through misconduct provisions, which include failure to comply with applicable prescribed codes of conduct for police service board members [CSPA s.2(1)].\n3.  **French Language Services:** Persons have the right to communicate in French with and receive available services in French from LECA, subject to limits that are reasonable and necessary [LECA Guideline 011 — French Language Complaints — Purpose — Purpose].\n4.  **First Nation Policing Agreements:** Agreements may address quality expectations such as the manner of service provision, cultural traditions, officer qualifications, uniforms, dispute resolution, and funding [CSPA s.76(3)].\n5.  **Adequate and Effective Policing:** The concept of \"adequate and effective policing\" is defined by reference to subsection 11(1), the content of which is not provided in the excerpts [CSPA s.2(1)].\n\nThe provided sections do not address the full scope of mandates for all defined bodies (such as the SIU or Inspector General) or the specific content of subsection 11(1). Please consult the full Community Safety and Policing Act, 2019 for more information.\n\n**Sources**\n*   CSPA s.1\n*   CSPA s.2(1)\n*   CSPA s.76(3)\n*   LECA Guideline 011 — French Language Complaints — Purpose — Purpose",
+      "expected_citations": [
+        "CSPA s.103",
+        "CSPA s.125"
+      ],
+      "expected_topics": [
+        "Inspector General",
+        "Inspectorate",
+        "LECA",
+        "police service board",
+        "oversight"
+      ],
+      "llm_judge": {
+        "faithfulness": 1.0,
+        "relevance": 1.0,
+        "completeness": 1.0,
+        "average": 1.0
+      },
+      "citation_passed": true,
+      "citation_found": [
+        "CSPA s.76(3)",
+        "[CSPA s.2(1)]",
+        "LECA Guideline 011",
+        "CSPA s.2(1)",
+        "[CSPA s.76(3)]",
+        "[CSPA s.1]",
+        "CSPA s.1",
+        "[LECA Guideline 011"
+      ],
+      "topic_score": 0.8,
+      "topics_found": [
+        "Inspector General",
+        "LECA",
+        "police service board",
+        "oversight"
+      ],
+      "overall_score": 0.9,
+      "passed": true
+    },
+    {
+      "id": 3,
+      "category": "Inspectorate of Policing",
+      "prompt": "What types of compliance or quality reviews can the Inspectorate of Policing conduct under public legislation?",
+      "answer": "Based on the provided legislative sections, the Inspector General is authorized to conduct specific monitoring, inspections, and analyses to ensure compliance and address policing complaints. The provided text outlines the following types of reviews and oversight activities:\n\n1.  **Compliance Inspections and Monitoring:** The Inspector General must monitor and conduct inspections of police service boards, chiefs of police, police services, and prescribed policing providers to ensure they comply with the Act and the regulations [CSPA s.102(4)(a)].\n2.  **Board Member Misconduct Inspections:** The Inspector General must monitor and conduct inspections of members of police service boards to ensure that they do not commit misconduct [CSPA s.102(4)(c)].\n3.  **Compliance Research and Analysis:** The Inspector General is required to develop, maintain, and manage records and conduct research and analyses regarding compliance with the Act and the regulations [CSPA s.102(4)(d)].\n4.  **Complaint-Based Reviews:** The Inspector General deals with complaints regarding the adequacy and effectiveness of policing, failures to comply with the Act (other than misconduct), and policies or procedures established by boards or chiefs [CSPA s.102(4)(e)] [CSPA s.107(1)].\n5.  **Compliance Consultation:** The Inspector General consults with and advises police service boards and chiefs of police regarding compliance with the Act and the regulations [CSPA s.102(4)(b)].\n\nAdditionally, police service boards and chiefs of police are required to implement their own quality assurance processes relating to the provision of adequate and effective policing and compliance with the Act and regulations, which falls under the scope of regulatory compliance [O. Reg. 392/23 s.23].\n\n### Sources\n*   CSPA s.102(4) — Inspector General's duties\n*   CSPA s.107(1) — Policing complaints\n*   O. Reg. 392/23 s.23 — Quality assurance",
+      "expected_citations": [
+        "CSPA s.103",
+        "CSPA s.125"
+      ],
+      "expected_topics": [
+        "inspection",
+        "compliance",
+        "Inspector General",
+        "direction",
+        "non-compliance"
+      ],
+      "llm_judge": {
+        "faithfulness": 1.0,
+        "relevance": 1.0,
+        "completeness": 0.8,
+        "average": 0.93
+      },
+      "citation_passed": true,
+      "citation_found": [
+        "[CSPA s.102(4)(c)]",
+        "[CSPA s.102(4)(b)]",
+        "[O. Reg. 392/23 s.23]",
+        "[CSPA s.102(4)(d)]",
+        "[CSPA s.102(4)(e)]",
+        "[CSPA s.107(1)]",
+        "O. Reg. 392/23 s.23",
+        "[CSPA s.102(4)(a)]",
+        "CSPA s.102(4)",
+        "CSPA s.107(1)"
+      ],
+      "topic_score": 0.6,
+      "topics_found": [
+        "inspection",
+        "compliance",
+        "Inspector General"
+      ],
+      "overall_score": 0.8,
+      "passed": true
+    },
+    {
+      "id": 4,
+      "category": "Inspectorate of Policing",
+      "prompt": "What types of public evidence would typically demonstrate readiness for an Inspectorate of Policing inspection?",
+      "answer": "The provided legislative sections do not explicitly outline the specific statutory duties imposed *on police services* regarding the maintenance and production of records to comply with the Inspector General of Policing. The text primarily defines the duties of the Inspector General and the regulation-making powers of the Lieutenant Governor in Council.\n\nThe provided sections do not address this question directly. Please consult Part VII (Inspector General of Policing) of the Act or regulations made under CSPA s.261 for more information.\n\nBased on the provided text, the following related authorities and duties are noted regarding the Inspector General's oversight capabilities:\n\n1.  **Inspector General's Duty to Inspect:** The Inspector General is required to monitor and conduct inspections of police services to ensure compliance with the Act and regulations [CSPA s.102(4)(a)].\n2.  **Inspector General's Record Management:** The Inspector General is responsible to develop, maintain, and manage records and conduct research and analyses regarding compliance with the Act and regulations [CSPA s.102(4)(d)].\n3.  **Regulation-Making Authority:** The Lieutenant Governor in Council has the authority to make regulations governing the requirements to provide notice under Part VII (Inspector General of Policing), including prescribing the required contents of the notice and circumstances in which notice is deemed given [CSPA s.261(1)48].\n4.  **Complaint Process Regulations:** Regulations may govern the process with respect to complaints to the Inspector General [CSPA s.261(1)47].\n\n### Sources\n*   CSPA s.102(4)\n*   CSPA s.261(1)",
+      "expected_citations": [
+        "CSPA s.103",
+        "CSPA s.125"
+      ],
+      "expected_topics": [
+        "inspection",
+        "compliance",
+        "policies",
+        "records",
+        "Inspector General"
+      ],
+      "llm_judge": {
+        "faithfulness": 1.0,
+        "relevance": 0.9,
+        "completeness": 0.8,
+        "average": 0.9
+      },
+      "citation_passed": true,
+      "citation_found": [
+        "[CSPA s.261(1)",
+        "[CSPA s.102(4)(d)]",
+        "CSPA s.102(4)",
+        "[CSPA s.102(4)(a)]",
+        "CSPA s.261(1)",
+        "CSPA s.261"
+      ],
+      "topic_score": 0.8,
+      "topics_found": [
+        "inspection",
+        "compliance",
+        "records",
+        "Inspector General"
+      ],
+      "overall_score": 0.9,
+      "passed": true
+    },
+    {
+      "id": 5,
+      "category": "LECA / Complaints and Professional Standards",
+      "prompt": "What quality assurance expectations arise from the Law Enforcement Complaints Agency (LECA) framework?",
+      "answer": "Based on the provided sections, the statutory duties, obligations, and powers governing oversight of compliance with professional standards and conduct are referenced primarily through the authority of the Complaints Director and notification requirements for police services boards.\n\n**Statutory Authority and Rule-Making**\n*   The Complaints Director has the authority to make rules to govern anything related to his or her duties or powers under the Act [CSPA s.134].\n*   These rules govern the framework for notifications and procedures, such as the LECA Rules of Procedure [LECA Rules — INTRODUCTION].\n\n**Notification Obligations Regarding Misconduct**\n*   Police services boards are required to notify the Complaints Director if they become aware that a chief of police or deputy chief of police may have engaged in misconduct that involves, impacts, or relates to a member or members of the public [CSPA s.197(2)].\n*   Boards are not responsible for notifying the Complaints Director of misconduct by officers other than a chief of police or deputy chief of police [LECA Guideline 008 — Types of conduct that may be reported].\n*   Boards are not required to notify the Complaints Director of potential misconduct by a chief or deputy chief that took place prior to April 1, 2024 [LECA Guideline 008 — Types of conduct that may be reported].\n\n**Complaints Director Discretion and Public Interest**\n*   Upon notification, the Complaints Director determines what is in the public interest, which may include an investigation by LECA, a Notice of Inquiry and Examination, a systemic review, or a notification pursuant to the Act [LECA Guideline 008 — Purpose of Guideline].\n*   Complaints made by members of the public are given priority over incoming notifications from boards [LECA Guideline 008 — Types of conduct that may be reported].\n\n**Sources**\n*   CSPA s.134\n*   CSPA s.197(2)\n*   LECA Rules — INTRODUCTION\n*   LECA Guideline 008 — Notifications from Police Services Boards\n*   LECA Guideline 009 — Notifications from the Inspector General (IG)",
+      "expected_citations": [
+        "CSPA s.76",
+        "CSPA s.175"
+      ],
+      "expected_topics": [
+        "complaints",
+        "Complaints Director",
+        "investigation",
+        "oversight",
+        "timeliness"
+      ],
+      "llm_judge": {
+        "faithfulness": 1.0,
+        "relevance": 1.0,
+        "completeness": 0.8,
+        "average": 0.93
+      },
+      "citation_passed": true,
+      "citation_found": [
+        "CSPA s.197(2)",
+        "LECA Rules",
+        "LECA Guideline 009",
+        "[LECA Guideline 008",
+        "[CSPA s.197(2)]",
+        "[CSPA s.134]",
+        "[LECA Rules",
+        "LECA Guideline 008",
+        "CSPA s.134"
+      ],
+      "topic_score": 0.8,
+      "topics_found": [
+        "complaints",
+        "Complaints Director",
+        "investigation",
+        "oversight"
+      ],
+      "overall_score": 0.9,
+      "passed": true
+    },
+    {
+      "id": 6,
+      "category": "LECA / Complaints and Professional Standards",
+      "prompt": "How do public complaints frameworks contribute to quality assurance and continuous improvement in policing?",
+      "answer": "Based on the provided legislative sections, the Community Safety and Policing Act (CSPA) establishes accountability through the inspection powers of the Inspector General, the standard-setting duties of the Minister, and the oversight authority of the Complaints Director, supported by mandatory notification protocols for misconduct.\n\n**Inspector General Duties and Powers**\n1. The Inspector General must monitor and conduct inspections of police service boards, chiefs of police, and police services to ensure compliance with the Act and regulations [CSPA s.102(4)].\n2. The Inspector General is required to consult with and advise police service boards and chiefs regarding compliance with the Act and regulations [CSPA s.102(4)].\n3. The Inspector General must monitor and conduct inspections of members of police service boards to ensure that they do not commit misconduct [CSPA s.102(4)].\n4. The Inspector General is responsible for dealing with complaints under sections 106 and 107 and with disclosures of misconduct under section 185 [CSPA s.102(4)].\n5. The Inspector General must develop, maintain, and manage records and conduct research and analyses regarding compliance with the Act and the regulations [CSPA s.102(4)].\n\n**Minister's Duties and Standards**\n6. The Minister must consult with and advise police service boards and chiefs regarding compliance with the Canadian Charter of Rights and Freedoms and the Human Rights Code [CSPA s.3(1)].\n7. The Minister is responsible for developing and maintaining education and training standards for use in the education and training of persons who provide policing functions [CSPA s.3(1)].\n8. The Minister must develop, maintain, and manage records related to the appointment, education, training, suspension, and discipline of police officers and special constables [CSPA s.3(1)].\n\n**Complaints Director Authority and Notification Framework**\n9. The Complaints Director has the authority to make rules to govern anything related to his or her duties or powers under the Act [LECA Rules — INTRODUCTION].\n10. Police service boards are obligated to notify the Complaints Director if they become aware that a chief of police or deputy chief may have engaged in misconduct that involves, impacts, or relates to a member of the public [LECA Guideline 008 — Purpose of Guideline].\n11. All notifications of potential misconduct must be provided to the Complaints Director through e-Notification available online [LECA Guideline 008 — e-Notification].\n12. Boards are not required to notify the Complaints Director of potential misconduct by a chief or deputy chief that took place prior to April 1, 2024 [LECA Guideline 008 — Types of conduct that may be reported].\n13. Boards are not required to notify the Complaints Director of potential misconduct by a chief or deputy chief where there is an active public complaint investigation about the same incident and alleging the very same misconduct [LECA Guideline 008 — Types of conduct that may be reported].\n\n**Sources**\n*   [LECA Rules — INTRODUCTION — INTRODUCTION]\n*   [CSPA s.102(4) — Inspector General's duties]\n*   [LECA Guideline 009 — Notifications from the Inspector General (IG) — Purpose of Guideline — Purpose of Guideline]\n*   [CSPA s.3(1) — Minister's general duties]\n*   [LECA Guideline 008 — Notifications from Police Services Boards — Purpose of Guideline — Purpose of Guideline]",
+      "expected_citations": [
+        "CSPA s.76",
+        "CSPA s.175"
+      ],
+      "expected_topics": [
+        "complaints",
+        "feedback",
+        "accountability",
+        "improvement",
+        "Complaints Director"
+      ],
+      "llm_judge": {
+        "faithfulness": 1.0,
+        "relevance": 0.9,
+        "completeness": 0.85,
+        "average": 0.92
+      },
+      "citation_passed": true,
+      "citation_found": [
+        "[CSPA s.102(4)",
+        "[LECA Guideline 009",
+        "[CSPA s.102(4)]",
+        "[LECA Guideline 008",
+        "[CSPA s.3(1)",
+        "[CSPA s.3(1)]",
+        "[LECA Rules"
+      ],
+      "topic_score": 0.6,
+      "topics_found": [
+        "complaints",
+        "accountability",
+        "Complaints Director"
+      ],
+      "overall_score": 0.8,
+      "passed": true
+    },
+    {
+      "id": 7,
+      "category": "Risk, Monitoring, and Continuous Improvement",
+      "prompt": "Does public legislation require or imply expectations related to risk identification or monitoring in policing, and how are these reflected in oversight activities?",
+      "answer": "Based on the provided legislative sections, specific statutory duties concerning risk identification imposed directly on police services are not explicitly detailed. The provided sections do not address this question directly. Please consult the specific Part of the Act regarding Police Service Duties for more information.\n\nHowever, the provided sections outline the Inspector General of Policing's duties and powers to monitor police services and ensure compliance with legislative mandates. The specific duties and powers granted to the Inspector General include:\n\n1.  **Monitoring and Inspections:** The Inspector General shall monitor and conduct inspections of police services and police service boards to ensure that they comply with the Act and the regulations [CSPA s.102(4)(a)].\n2.  **Compliance Advice:** The Inspector General shall consult with and advise police service boards and chiefs of police regarding compliance with the Act and the regulations [CSPA s.102(4)(b)].\n3.  **Records and Research:** The Inspector General shall develop, maintain, and manage records and conduct research and analyses regarding compliance with the Act and the regulations [CSPA s.102(4)(d)].\n4.  **Complaints and Misconduct:** The Inspector General shall deal with complaints and with disclosures of misconduct [CSPA s.102(4)(e)].\n5.  **Orders for Adequate Policing:** The Inspector General may make an order requiring a police service board or the Commissioner to ensure adequate and effective policing is provided in an area if he or she finds that adequate and effective policing is not being provided or that an emergency exists [CSPA s.20(1)].\n\nWhile the Minister has duties to provide advice concerning security risks and mitigation strategies, this is a Ministerial function rather than a direct police service obligation in the provided text [CSPA s.3(1)(k)].\n\n### Sources\n*   CSPA s.3(1)(k)\n*   CSPA s.20(1)\n*   CSPA s.102(4)(a)\n*   CSPA s.102(4)(b)\n*   CSPA s.102(4)(d)\n*   CSPA s.102(4)(e)",
+      "expected_citations": [
+        "CSPA s.103",
+        "CSPA s.11"
+      ],
+      "expected_topics": [
+        "monitoring",
+        "inspection",
+        "risk",
+        "oversight",
+        "compliance"
+      ],
+      "llm_judge": {
+        "faithfulness": 1.0,
+        "relevance": 1.0,
+        "completeness": 1.0,
+        "average": 1.0
+      },
+      "citation_passed": true,
+      "citation_found": [
+        "[CSPA s.102(4)(b)]",
+        "CSPA s.102(4)(a)",
+        "[CSPA s.102(4)(d)]",
+        "[CSPA s.20(1)]",
+        "[CSPA s.102(4)(e)]",
+        "[CSPA s.102(4)(a)]",
+        "CSPA s.102(4)(e)",
+        "CSPA s.3(1)(k)",
+        "CSPA s.102(4)(b)",
+        "CSPA s.102(4)(d)",
+        "[CSPA s.3(1)(k)]",
+        "CSPA s.20(1)"
+      ],
+      "topic_score": 0.8,
+      "topics_found": [
+        "monitoring",
+        "inspection",
+        "risk",
+        "compliance"
+      ],
+      "overall_score": 0.9,
+      "passed": true
+    },
+    {
+      "id": 8,
+      "category": "Risk, Monitoring, and Continuous Improvement",
+      "prompt": "How does Ontario's public police oversight framework support continuous improvement?",
+      "answer": "Based on the provided legislative sections, the Community Safety and Policing Act, 2019 (CSPA) establishes distinct mandates for the Inspector General of Policing regarding inspections and compliance, and specific duties for police service boards regarding the effectiveness of policing and oversight of the chief of police.\n\n### Inspector General of Policing: Inspection and Review Mandates\n\nThe Inspector General holds the following statutory duties and powers to ensure compliance and address misconduct:\n\n1.  **Monitoring and Inspections for Compliance:** The Inspector General must monitor and conduct inspections of police service boards, chiefs of police, and police services to ensure compliance with the Act and regulations [CSPA s.102(4)(a)].\n2.  **Advisory Role:** The Inspector General must consult with and advise boards and chiefs regarding compliance with the Act and regulations [CSPA s.102(4)(b)].\n3.  **Board Member Misconduct:** The Inspector General must monitor and conduct inspections of members of police service boards to ensure they do not commit misconduct [CSPA s.102(4)(c)].\n4.  **Research and Records:** The Inspector General must develop, maintain, and manage records and conduct research and analyses regarding compliance with the Act and regulations [CSPA s.102(4)(d)].\n5.  **Complaints and Disclosures:** The Inspector General must deal with complaints under sections 106 and 107 and with disclosures of misconduct under section 185 [CSPA s.102(4)(e)].\n6.  **Reporting:** The Inspector General must submit an annual report to the Minister [CSPA s.102(4)(f)].\n7.  **Power to Cause Inspections:** The Inspector General may cause an inspection to be conducted by an inspector to determine if a board member has committed misconduct [CSPA s.111(2)(a)].\n8.  **Power to Determine Compliance:** The Inspector General may cause an inspection to determine if a board, chief, or service is complying with the Act and regulations [CSPA s.111(2)(b)].\n\n### Police Service Boards: Responsibilities Regarding Performance and Standards\n\nPolice service boards hold the following responsibilities to ensure policing standards and oversight:\n\n1.  **Effective Policing:** The board shall ensure that adequate and effective policing is provided in the area for which it has policing responsibility [CSPA s.37(1)(a)].\n2.  **Chief Performance Monitoring:** The board shall monitor the chief of police's performance [CSPA s.37(1)(f)].\n3.  **Annual Performance Review:** The board shall conduct a review of the chief of police's performance at least annually in accordance with regulations made by the Minister, if any [CSPA s.37(1)(g)].\n4.  **Discipline Oversight:** The board shall monitor the chief of police's handling of discipline within the police service [CSPA s.37(1)(i)].\n5.  **Facility Standards:** The board shall ensure that any police facilities, including police lock-ups, used by the board comply with the prescribed standards, if any [CSPA s.37(1)(j)].\n\n**Note on Efficiency and Accountability:**\nWhile the provided sections assign the duty to ensure \"effective\" policing to boards [CSPA s.37(1)(a)], the specific term \"efficiency\" appears in the provided text only within the Minister's duties regarding consulting on methods of providing policing [CSPA s.3(1)(d)(i)]. The provided sections do not explicitly define \"accountability\" as a standalone statutory duty, though monitoring and inspection duties serve this function.\n\n### Sources\n*   CSPA s.102(4) — Inspector General's duties\n*   CSPA s.111(2) — Power to inspect\n*   CSPA s.37(1) — Police service board duties\n*   CSPA s.3(1) — Minister's general duties",
+      "expected_citations": [
+        "CSPA s.103",
+        "CSPA s.125"
+      ],
+      "expected_topics": [
+        "inspections",
+        "recommendations",
+        "oversight",
+        "accountability",
+        "improvement"
+      ],
+      "llm_judge": {
+        "faithfulness": 1.0,
+        "relevance": 0.9,
+        "completeness": 0.9,
+        "average": 0.93
+      },
+      "citation_passed": true,
+      "citation_found": [
+        "[CSPA s.102(4)(b)]",
+        "[CSPA s.102(4)(c)]",
+        "[CSPA s.37(1)(f)]",
+        "CSPA s.37(1)",
+        "[CSPA s.102(4)(d)]",
+        "[CSPA s.3(1)(d)",
+        "[CSPA s.102(4)(e)]",
+        "[CSPA s.102(4)(f)]",
+        "[CSPA s.111(2)(a)]",
+        "[CSPA s.37(1)(a)]",
+        "[CSPA s.37(1)(j)]",
+        "[CSPA s.102(4)(a)]",
+        "[CSPA s.37(1)(i)]",
+        "CSPA s.102(4)",
+        "CSPA s.3(1)",
+        "[CSPA s.37(1)(g)]",
+        "CSPA s.111(2)",
+        "[CSPA s.111(2)(b)]"
+      ],
+      "topic_score": 0.6,
+      "topics_found": [
+        "inspections",
+        "oversight",
+        "accountability"
+      ],
+      "overall_score": 0.8,
+      "passed": true
+    },
+    {
+      "id": 9,
+      "category": "QA Checklists",
+      "prompt": "For public complaints handling, generate a quality assurance checklist or series of review questions based on public legislation and oversight guidance.",
+      "answer": "Based on the provided legislative sections and oversight guidelines, the following quality assurance checklist outlines the required review questions for public complaints handling.\n\n### Quality Assurance Checklist for Public Complaints Handling\n\n1.  **QA Process Implementation**\n    Has the police service board or chief of police implemented a quality assurance process? [O. Reg. 392/23 s.23]\n\n2.  **QA Process Scope**\n    Does the quality assurance process relate to the provision of adequate and effective policing? [O. Reg. 392/23 s.23(a)]\n\n3.  **Compliance Monitoring**\n    Does the quality assurance process relate to compliance with the Act and the regulations? [O. Reg. 392/23 s.23(b)]\n\n4.  **Complaint Screening Criteria**\n    Were the required screening criteria considered, including the seriousness of the complaint and the seriousness of the harm alleged? [LECA Guideline 001]\n\n5.  **Vulnerability Assessment**\n    Did the review consider if the matter involves vulnerable individuals or communities? [LECA Guideline 001]\n\n6.  **Public Interest Determination**\n    Was the public interest determined by considering the circumstances of the complaint and balancing the relevant interests? [LECA Guideline 001]\n\n7.  **Related Offence Investigations**\n    If the complaint is the subject of an investigation of an offence, was the option to postpone the commencement of the investigation considered under CSPA s.163? [LECA Guideline 001]\n\n8.  **Investigative Steps**\n    Did the investigating entity conduct reasonable investigative steps tailored to the circumstances and issues raised? [LECA Guideline 004]\n\n9.  **Report Reasons**\n    Does the investigative report contain sufficient reasons which address the issues raised in the complaint? [LECA Guideline 004]\n\n10. **Report Structure Selection**\n    Was the appropriate report structure selected (Standard vs. Comprehensive) based on whether the investigation required a more fulsome report? [LECA Guideline 004]\n\n11. **Public Assistance Boundaries**\n    Was information provided to members of the public without providing legal advice or personal opinions about the complaint? [LECA Rules Rule 4.2], [LECA Rules Rule 4.4]\n\n12. **Retention Decision Factors**\n    If the Director retained the investigation, was the decision guided by considerations regarding the integrity of the police service and public confidence? [LECA Guideline 002]\n\n### Sources\n\n*   [O. Reg. 392/23 s.23]\n*   [O. Reg. 392/23 s.23(a)]\n*   [O. Reg. 392/23 s.23(b)]\n*   [LECA Guideline 001]\n*   [CSPA s.163]\n*   [LECA Guideline 004]\n*   [LECA Rules Rule 4.2]\n*   [LECA Rules Rule 4.4]\n*   [LECA Guideline 002]",
+      "expected_citations": [
+        "CSPA s.76",
+        "CSPA s.175"
+      ],
+      "expected_topics": [
+        "complaints",
+        "checklist",
+        "review",
+        "Complaints Director",
+        "timeliness"
+      ],
+      "llm_judge": {
+        "faithfulness": 1.0,
+        "relevance": 1.0,
+        "completeness": 0.8,
+        "average": 0.93
+      },
+      "citation_passed": true,
+      "citation_found": [
+        "[O. Reg. 392/23 s.23]",
+        "[LECA Guideline 004]",
+        "[O. Reg. 392/23 s.23(a)]",
+        "[LECA Guideline 001]",
+        "CSPA s.163",
+        "[O. Reg. 392/23 s.23(b)]",
+        "[CSPA s.163]",
+        "[LECA Rules",
+        "[LECA Guideline 002]"
+      ],
+      "topic_score": 0.6,
+      "topics_found": [
+        "complaints",
+        "checklist",
+        "review"
+      ],
+      "overall_score": 0.8,
+      "passed": true
+    },
+    {
+      "id": 10,
+      "category": "QA Checklists",
+      "prompt": "Generate a QA line of inquiry for use of force, based solely on public legislative and oversight expectations.",
+      "answer": "Based on the provided legislative sections and guidelines, the following Quality Assurance lines of inquiry establish expectations for use of force compliance, training verification, and misconduct notification.\n\n### QA Lines of Inquiry: Use of Force and Oversight\n\n1.  **Verify Training Compliance**\n    Confirm that every member of the police service who may be required to use force is in compliance with the training requirements prescribed by the Minister on the use of force [O. Reg. 391/23 s.12(1)(a)]. Confirm that members authorized to carry or use firearms or non-firearm weapons are compliant with respective Minister-prescribed training requirements [O. Reg. 391/23 s.12(1)(b)-(c)].\n\n2.  **Verify Training Record Maintenance**\n    Ensure that the chief of police maintains records of the training taken by members on the use of force, firearms, and non-firearm weapons, including the dates each training was taken [O. Reg. 391/23 s.12(4)].\n\n3.  **Assess Use of Force Criteria (Special Constables)**\n    For special constables, verify that force was not used unless it was for the purpose of carrying out a duty, the constable was entitled by statute or common law to use force for that duty, the constable was acting on reasonable grounds, and the force used was no more than necessary given the circumstances [O. Reg. 410/23 s.11(1)].\n\n4.  **Assess Conduct Consistency with Training**\n    If reviewing potential discipline matters, determine if the conduct was in the good faith performance of duties and consistent with the member's training and any applicable procedures established by their employer or chief of police [O. Reg. 410/23 s.11(2)].\n\n5.  **Verify Misconduct Notification Timing**\n    If the use of force incident involves potential misconduct involving a member of the public, verify that the Chief or Commissioner notified the Complaints Director within seven (7) business days of becoming aware of the conduct, unless delayed due to criminal investigation interference, law enforcement response needs, or imminent safety risks [LECA Guideline 007 para 1 & 14].\n\n6.  **Verify Misconduct Notification Content**\n    Ensure the e-Notification to the Complaints Director includes relevant details to assist in determining public interest, such as whether the matter involves sensitive information, court findings, youth records, confidential informants, whistleblowers, or existing service directives [LECA Guideline 007 para 2(a)-(i)].\n\n7.  **Verify Weapon Classification**\n    Confirm that any weapon used is correctly classified according to regulatory definitions, distinguishing between a \"firearm\" (as defined in the Criminal Code) and a \"conducted energy weapon\" (listed in the Schedule to the Regulations Prescribing Certain Firearms... SOR/98-462) [O. Reg. 396/23 s.1(1)].\n\n8.  **Check for Duplicate Reporting**\n    Confirm that notification to the Complaints Director is not duplicated if the Special Investigations Unit (SIU) or Inspector General (IG) has already notified the Director of the same incident and misconduct, unless new potential misconduct has been identified [LECA Guideline 007 para 8 & 11].\n\n### Sources\n*   O. Reg. 396/23 s.1(1) — Interpretation\n*   O. Reg. 391/23 s.12(1) — Duties of chief, Commission re training\n*   O. Reg. 410/23 s.11(1) — Use of force\n*   LECA Guideline 007 — Notifications from Chiefs of Police & Commissioner",
+      "expected_citations": [
+        "CSPA s.138",
+        "CSPA s.139"
+      ],
+      "expected_topics": [
+        "use of force",
+        "documentation",
+        "review",
+        "accountability",
+        "monitoring"
+      ],
+      "llm_judge": {
+        "faithfulness": 1.0,
+        "relevance": 1.0,
+        "completeness": 1.0,
+        "average": 1.0
+      },
+      "citation_passed": true,
+      "citation_found": [
+        "[O. Reg. 391/23 s.12(1)(b)",
+        "[O. Reg. 396/23 s.1(1)]",
+        "[LECA Guideline 007",
+        "O. Reg. 396/23 s.1(1)",
+        "[O. Reg. 391/23 s.12(1)(a)]",
+        "[O. Reg. 410/23 s.11(1)]",
+        "O. Reg. 410/23 s.11(1)",
+        "[O. Reg. 410/23 s.11(2)]",
+        "[O. Reg. 391/23 s.12(4)]",
+        "O. Reg. 391/23 s.12(1)",
+        "LECA Guideline 007"
+      ],
+      "topic_score": 0.4,
+      "topics_found": [
+        "use of force",
+        "review"
+      ],
+      "overall_score": 0.7,
+      "passed": true
+    },
+    {
+      "id": 11,
+      "category": "QA Checklists",
+      "prompt": "What quality assurance questions should be asked when reviewing police investigative practices, using public sources only?",
+      "answer": "Based on the provided legislative sections, the Community Safety and Policing Act (CSPA) and its associated regulations establish the framework for prescribing policing standards, governing complaint investigations, and managing adjudication processes. The specific statutory duties and powers available in the provided text include the authority to prescribe standards, the obligation to investigate referred complaints, and the governance of disciplinary hearings.\n\n1.  **Regulation-Making Authority for Standards**\n    The Lieutenant Governor in Council has the power to make regulations prescribing policing standards, including those required for adequate and effective policing [CSPA s.261(1)2]. This authority also extends to governing the governance, operation, and administration of police services [CSPA s.261(1)6].\n\n2.  **Prescribed Operational Standards**\n    Regulations prescribe specific standards for adequate and effective policing relating primarily to law enforcement [O. Reg. 392/23 s.5(1)]. These standards include requirements for:\n    *   Community patrol using a police service's own officers, consisting of general and directed patrol [O. Reg. 392/23 s.5(1)1].\n    *   A criminal intelligence process that includes collection, processing, analysis, dissemination, and maintenance of intelligence information [O. Reg. 392/23 s.5(1)2, O. Reg. 392/23 s.5(2)].\n    *   Capacities for crime analysis, call for service analysis, public disorder analysis, and investigative supports (e.g., forensic identification, surveillance) [O. Reg. 392/23 s.5(1)2].\n\n3.  **Oversight of Complaint Investigations**\n    The Complaints Director has the authority to make rules to govern duties or powers under the Act [CSPA s.134 via LECA Rules — INTRODUCTION]. Under the Acts, the Chief of Police is required to conduct an investigation into a complaint referred by the Director and produce an investigative report [LECA Guideline 004 — 2. Application].\n\n4.  **Adjudication and Discipline Governance**\n    Regulations may govern the conduct of hearings, including prescribing procedures and sentencing guidelines for adjudicators [CSPA s.261(1)38, CSPA s.261(1)58]. For adjudication hearings, references to a tribunal in the *Statutory Powers Procedure Act* are read as references to an adjudicator appointed under the CSPA [O. Reg. 404/23 s.3(1)].\n\nThe provided sections do not explicitly detail the specific statutory powers for routine compliance audits of operational standards beyond the complaint investigation process described above. Please consult the Inspector General of Policing provisions in the CSPA for more information on broader oversight powers.\n\n### Sources\n*   Community Safety and Policing Act, 2019, s.261(1)\n*   Community Safety and Policing Act, 2019, s.134 (referenced in LECA Rules — INTRODUCTION)\n*   O. Reg. 392/23, s.5(1), s.5(2)\n*   O. Reg. 404/23, s.3(1)\n*   LECA Guideline 004 — Investigative Reports, s.2. Application\n*   LECA Rules — INTRODUCTION",
+      "expected_citations": [
+        "CSPA s.198",
+        "CSPA s.175"
+      ],
+      "expected_topics": [
+        "investigation",
+        "supervision",
+        "timeliness",
+        "consistency",
+        "accountability"
+      ],
+      "llm_judge": {
+        "faithfulness": 0.95,
+        "relevance": 0.6,
+        "completeness": 0.5,
+        "average": 0.68
+      },
+      "citation_passed": true,
+      "citation_found": [
+        "[CSPA s.261(1)",
+        "[O. Reg. 392/23 s.5(1)",
+        "[LECA Guideline 004",
+        "O. Reg. 404/23",
+        "LECA Guideline 004",
+        "LECA Rules",
+        "[O. Reg. 404/23 s.3(1)]",
+        "O. Reg. 392/23 s.5(2)]",
+        "O. Reg. 392/23",
+        "CSPA s.261(1)",
+        "[O. Reg. 392/23 s.5(1)]",
+        "[CSPA s.134"
+      ],
+      "topic_score": 0.2,
+      "topics_found": [
+        "investigation"
+      ],
+      "overall_score": 0.6,
+      "passed": true
+    },
+    {
+      "id": 12,
+      "category": "QA Checklists",
+      "prompt": "Create a public-source-based QA checklist for detention or custody management.",
+      "answer": "Based on the provided legislative sections, there is insufficient information to fully outline the statutory duties and protocols governing custody standards and detention protocols. The provided sections do not address this question directly. Please consult prescribed standards and regulations for more information.\n\nHowever, the provided text does outline one specific compliance obligation regarding police facilities used for detention:\n\n1.  **Police Service Board Duty Regarding Facilities:** A police service board must ensure that any police facilities, including police lock-ups, used by the board comply with the prescribed standards, if any [CSPA s.37(1)(j)].\n\nThe provided sections do not specify the duties of the Chief of Police regarding the establishment or implementation of detention protocols, nor do they detail the specific custody standards beyond facility compliance [CSPA s.37(1)]. The Inspector General is tasked with monitoring compliance with the Act and regulations generally, but specific custody oversight duties are not detailed in the provided text [CSPA s.102(4)(a)].\n\n**Sources**\n*   CSPA s.37(1)(j)\n*   CSPA s.37(1)\n*   CSPA s.102(4)(a)",
+      "expected_citations": [
+        "CSPA s.183"
+      ],
+      "expected_topics": [
+        "detention",
+        "custody",
+        "safeguards",
+        "monitoring",
+        "legislative"
+      ],
+      "llm_judge": {
+        "faithfulness": 1.0,
+        "relevance": 0.9,
+        "completeness": 0.8,
+        "average": 0.9
+      },
+      "citation_passed": true,
+      "citation_found": [
+        "CSPA s.37(1)",
+        "CSPA s.102(4)(a)",
+        "[CSPA s.37(1)]",
+        "[CSPA s.37(1)(j)]",
+        "[CSPA s.102(4)(a)]",
+        "CSPA s.37(1)(j)"
+      ],
+      "topic_score": 0.8,
+      "topics_found": [
+        "detention",
+        "custody",
+        "monitoring",
+        "legislative"
+      ],
+      "overall_score": 0.9,
+      "passed": true
+    }
+  ]
+}
