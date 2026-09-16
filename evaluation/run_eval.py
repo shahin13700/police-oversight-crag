@@ -1,7 +1,7 @@
 """
 evaluation/run_eval.py
 -----------------------
-Evaluation harness for the Ontario Oversight CRAG pipeline.
+Evaluation harness for the Police Oversight CRAG pipeline.
 
 Runs all 12 QA benchmark prompts through the pipeline and scores each answer
 against expected topics and citations. Calculates accuracy % across the test suite.
@@ -173,7 +173,7 @@ def main():
     """Run the full evaluation pipeline."""
 
     print("=" * 70)
-    print("Ontario Oversight CRAG Evaluation Harness")
+    print("Police Oversight CRAG Evaluation Harness")
     print(f"Date: {date.today()}")
     print("=" * 70)
 

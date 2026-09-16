@@ -1,4 +1,4 @@
-# Ontario Oversight CRAG — Developer Cheat Sheet
+# Police Oversight CRAG — Developer Cheat Sheet
 
 Corrective RAG (CRAG) pipeline for Ontario police oversight legislation (CSPA 2019, Regulations, LECA guidelines).
 

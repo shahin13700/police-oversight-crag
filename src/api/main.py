@@ -44,13 +44,13 @@ async def lifespan(app: FastAPI):
     yield
     
     # Teardown logic
-    logger.info("Shutting down Ontario Oversight CRAG API...")
+    logger.info("Shutting down Police Oversight CRAG API...")
     pipeline_state["chunks"] = None
     pipeline_state["graph"] = None
 
 
 app = FastAPI(
-    title="Ontario Oversight CRAG API",
+    title="Police Oversight CRAG API",
     description="Backend inference and retrieval service for the Ontario Oversight CRAG UI.",
     lifespan=lifespan
 )

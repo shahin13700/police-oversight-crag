@@ -1,5 +1,5 @@
 """
-src/ui/app.py — Ontario Oversight CRAG Streamlit frontend
+src/ui/app.py — Police Oversight CRAG Streamlit frontend
 Run with:  streamlit run src/ui/app.py
 """
 import os, sys, base64, pathlib, tempfile
@@ -15,7 +15,7 @@ load_dotenv()
 from src.ui.export import build_session_docx
 
 st.set_page_config(
-    page_title="Ontario Oversight CRAG — Police Oversight Assistant",
+    page_title="Police Oversight CRAG — Police Oversight Assistant",
     page_icon="⚖️", layout="wide", initial_sidebar_state="expanded",
 )
 
@@ -347,7 +347,7 @@ with st.sidebar:
 st.markdown(f"""
 <div class="fade-in" style="margin-top:8px;">
     <div class="hero-badge">{svg_i(I_SEARCH, "#6e9eff" if is_dark() else "#4361ee")} AI-Powered Legislative Analysis</div>
-    <h1 class="hero-title">Ontario Oversight CRAG</h1>
+    <h1 class="hero-title">Police Oversight CRAG</h1>
     <p class="hero-sub">Corrective RAG Pipeline for the CSPA 2019, Ontario Regulations, and LECA Guidelines — every answer cites specific legislative sections</p>
     <div class="status-bar">
         <span class="s-chip s-ok">&#9679; Pipeline Ready</span>

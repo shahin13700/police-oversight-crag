@@ -1,5 +1,5 @@
 """
-src/ui/app_prod.py — Ontario Oversight CRAG Streamlit frontend (production)
+src/ui/app_prod.py — Police Oversight CRAG Streamlit frontend (production)
 Calls the FastAPI backend over HTTP. Run with:
     streamlit run src/ui/app_prod.py
 
@@ -22,7 +22,7 @@ load_dotenv()
 from src.ui.export import build_session_docx
 
 st.set_page_config(
-    page_title="Ontario Oversight CRAG — Police Oversight Assistant",
+    page_title="Police Oversight CRAG — Police Oversight Assistant",
     page_icon="⚖️", layout="wide", initial_sidebar_state="expanded",
 )
 
@@ -302,7 +302,7 @@ with open(_book_path, "w") as f:
 # ── Backend connection ────────────────────────────────────────────────
 API_URL = os.getenv("API_URL", "http://localhost:8000")
 
-@st.cache_resource(show_spinner="Connecting to Ontario Oversight CRAG backend...")
+@st.cache_resource(show_spinner="Connecting to Police Oversight CRAG backend...")
 def initialise_pipeline():
     res = requests.get(f"{API_URL}/health", timeout=10)
     res.raise_for_status()
@@ -363,7 +363,7 @@ with st.sidebar:
 st.markdown(f"""
 <div class="fade-in" style="margin-top:8px;">
     <div class="hero-badge">{svg_i(I_SEARCH, "#6e9eff" if is_dark() else "#4361ee")} AI-Powered Legislative Analysis</div>
-    <h1 class="hero-title">Ontario Oversight CRAG</h1>
+    <h1 class="hero-title">Police Oversight CRAG</h1>
     <p class="hero-sub">Corrective RAG Pipeline for the CSPA 2019, Ontario Regulations, and LECA Guidelines — every answer cites specific legislative sections</p>
     <div class="status-bar">
         <span class="s-chip s-ok">&#9679; Pipeline Ready</span>

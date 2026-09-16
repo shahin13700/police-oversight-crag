@@ -1,4 +1,4 @@
-# Ontario Oversight CRAG — Agentic Corrective RAG for Police Oversight Legislation
+# Police Oversight CRAG — Agentic Corrective RAG for Law Enforcement Legislation
 
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![LangGraph](https://img.shields.io/badge/orchestration-LangGraph-orange.svg)](https://github.com/langchain-ai/langgraph)
@@ -7,7 +7,7 @@
 [![Docker](https://img.shields.io/badge/deployment-Docker%20Compose-blue.svg)](https://www.docker.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-A production-grade **Corrective RAG (CRAG)** pipeline built to answer natural-language Quality Assurance and legal compliance questions grounded in Ontario police oversight legislation.
+A production-grade **Corrective RAG (CRAG)** pipeline engineered to answer natural-language Quality Assurance and statutory compliance inquiries across police oversight legislation, demonstrated using Ontario's comprehensive policing framework as the reference knowledge base.
 
 Every response is strictly grounded in public statutes, enforces precise legal citations (e.g. `[CSPA s.79(3)(a)]`), provides transparent confidence indicators, and refuses to extrapolate beyond retrieved legislative authority.
 
@@ -21,7 +21,7 @@ Interpreting provincial police oversight legislation is cognitively demanding an
 - **16 Law Enforcement Complaints Agency (LECA)** Guideline PDFs
 - **~1,868 indexed chunks** in a persistent vector index
 
-**Ontario Oversight CRAG** solves the legal QA problem by implementing self-correcting retrieval and citation enforcement:
+**Police Oversight CRAG** solves this high-stakes legal compliance problem through autonomous, self-correcting retrieval and deterministic citation enforcement:
 1. **Never Hallucinates General Knowledge:** If an answer cannot be located in the corpus, the system explicitly acknowledges the gap and suggests relevant statute topics.
 2. **Deterministic Citation Enforcement:** Every substantive assertion must cite its statutory authority (`[CSPA s.X(Y)]`).
 3. **Retrieval Confidence Scoring:** Computes confidence indicators (🟢 High / 🟡 Medium / 🔴 Low) derived from reciprocal rank fusion (RRF) scores.
@@ -118,8 +118,8 @@ python evaluation/run_eval.py
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/shahin13700/ontario-oversight-crag.git
-   cd ontario-oversight-crag
+   git clone https://github.com/shahin13700/police-oversight-crag.git
+   cd police-oversight-crag
    ```
 
 2. **Configure environment variables:**
@@ -196,7 +196,7 @@ ruff check --select E9,F63,F7,F82 .
 ## Repository Structure
 
 ```
-ontario-oversight-crag/
+police-oversight-crag/
 ├── data/raw/                 # Public statutes: CSPA 2019 .docx, Regulations, LECA PDFs
 ├── evaluation/               # LLM-as-a-judge evaluation harness & test QA pairs
 ├── scripts/                  # Batch indexing and verification scripts
