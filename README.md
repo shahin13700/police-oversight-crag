@@ -34,15 +34,15 @@ The pipeline is orchestrated as a state machine using **LangGraph**, applying th
 
 ```mermaid
 flowchart TD
-    Q[User Question] --> Router{Router}
-    Router -->|conversational| Gen[Generator<br/><i>Llama-3.3-70B</i>]
-    Router -->|retrieval| Ret[Hybrid Retriever<br/><i>BM25 + ChromaDB with RRF k=60</i>]
-    Ret --> Rerank[Cohere Reranker<br/><i>rerank-v4.0-fast</i>]
-    Rerank --> Grader{Relevance Grader}
-    Grader -->|pass: >= 2 relevant| Gen
-    Grader -->|fail: < 2 relevant| Rewriter[Query Rewriter<br/><i>Max 2 retries</i>]
+    Q["User Question"] --> Router{"Router"}
+    Router -->|conversational| Gen["Generator<br/><i>Llama-3.3-70B</i>"]
+    Router -->|retrieval| Ret["Hybrid Retriever<br/><i>BM25 + ChromaDB (RRF k=60)</i>"]
+    Ret --> Rerank["Cohere Reranker<br/><i>rerank-v4.0-fast</i>"]
+    Rerank --> Grader{"Relevance Grader"}
+    Grader -->|pass: 2+ relevant| Gen
+    Grader -->|fail: insufficient| Rewriter["Query Rewriter<br/><i>Max 2 retries</i>"]
     Rewriter --> Ret
-    Gen --> Ans[Cited Legal Answer<br/><i>[CSPA s.X(Y)] + Confidence Score</i>]
+    Gen --> Ans["Cited Legal Answer<br/><i>Statutory Citations + Confidence Indicator</i>"]
 
     style Q fill:#1f2937,stroke:#60a5fa,stroke-width:2px,color:#fff
     style Router fill:#1f2937,stroke:#f59e0b,stroke-width:2px,color:#fff
@@ -59,9 +59,9 @@ flowchart TD
 | Node | Function | Model / Service | Latency |
 |---|---|---|---|
 | **Router** | Classifies query as `retrieval` or `conversational` | Groq `llama-3.3-70b-versatile` (temp=0) | ~300ms |
-| **Hybrid Retriever** | BM25 keyword matching + ChromaDB dense search with Reciprocal Rank Fusion ($k=60$) | `rank_bm25` + ChromaDB (Cosine) | ~80ms |
+| **Hybrid Retriever** | BM25 keyword matching + ChromaDB dense search with Reciprocal Rank Fusion (k=60) | `rank_bm25` + ChromaDB (Cosine) | ~80ms |
 | **Reranker** | Cross-encoder scoring of retrieved candidate pairs | Cohere `rerank-v4.0-fast` API | ~180ms |
-| **Relevance Grader** | Evaluates candidate chunks; verifies $\ge 2$ relevant sections | Groq `llama-3.3-70b-versatile` (temp=0) | ~350ms |
+| **Relevance Grader** | Evaluates candidate chunks; verifies at least 2 relevant sections | Groq `llama-3.3-70b-versatile` (temp=0) | ~350ms |
 | **Query Rewriter** | Rewrites non-statutory or conversational phrasing into formal legislative language (max 2 retries) | Groq `llama-3.3-70b-versatile` (temp=0.3) | ~400ms |
 | **Generator** | Synthesizes plain-language answer strictly bound to retrieved sections with bracketed citations | Groq `llama-3.3-70b-versatile` (temp=0.1) | ~1.2s |
 
@@ -70,9 +70,9 @@ flowchart TD
 ## Key Engineering Decisions
 
 1. **Why CRAG Over Naive RAG?**
-   Naive RAG unconditionally feeds top-$k$ retrieved chunks into the generator. In legal text, passing irrelevant or tangential sections causes severe legal hallucination or misattribution. CRAG adds an active grading gate: if retrieved chunks lack relevance, the query is rewritten into statutory terminology and retrieved again before synthesis.
-2. **Hybrid Search via Reciprocal Rank Fusion ($k=60$):**
-   Legal queries often contain exact numeric section tags (`s.11(1)`) or formal acronyms (`LECA`, `SIU`, `OPP`) where dense vector embeddings struggle. Conversely, broad semantic queries fail under pure keyword matching. Combining BM25Okapi and dense embeddings via Reciprocal Rank Fusion ($RRF(d) = \sum_{m} \frac{1}{k + r_m(d)}$) captures both precision and conceptual recall.
+   Naive RAG unconditionally feeds top-k retrieved chunks into the generator. In legal text, passing irrelevant or tangential sections causes severe legal hallucination or misattribution. CRAG adds an active grading gate: if retrieved chunks lack relevance, the query is rewritten into statutory terminology and retrieved again before synthesis.
+2. **Hybrid Search via Reciprocal Rank Fusion (k=60):**
+   Legal queries often contain exact numeric section tags (`s.11(1)`) or formal acronyms (`LECA`, `SIU`, `OPP`) where dense vector embeddings struggle. Conversely, broad semantic queries fail under pure keyword matching. Combining BM25Okapi and dense embeddings via Reciprocal Rank Fusion (RRF score = Σ 1 / (60 + rank)) captures both precision and conceptual recall.
 3. **Cross-Encoder Reranking Before Grading:**
    RRF merges ranks without evaluating semantic relevance. Placing Cohere's cross-encoder reranker between RRF and the Grader ensures the most contextually relevant sections are evaluated first.
 4. **Decoupled Client & Microservice Architecture:**
@@ -85,7 +85,7 @@ flowchart TD
 The pipeline was benchmarked using an automated **LLM-as-a-Judge** framework evaluated against 12 complex statutory QA scenarios covering chief duties, misconduct complaint procedures, police service board obligations, and Inspector General powers.
 
 > [!NOTE]
-> Benchmark run on 2026-04-02 against the capstone build (`evaluation/results_2026-04-02.json`). The open-source release differs only in naming, branding, and configuration defaults; retrieval and generation logic is unchanged.
+> Benchmark run on 2026-04-02 against the baseline production build (`evaluation/results_2026-04-02.json`). The open-source release differs only in naming, branding, and configuration defaults; retrieval and generation logic is unchanged.
 
 - **Curated Benchmark Score:** **12/12 passed**
 - **Citation Accuracy:** All 12 evaluation answers cited the correct statutory authority (e.g., `[CSPA s.79(3)(a)]`).
@@ -135,7 +135,7 @@ python evaluation/run_eval.py
    ```bash
    docker compose up --build
    ```
-   > ℹ️ **First Boot Note:** On the initial startup, if the ChromaDB vector store is unindexed, the FastAPI backend will automatically chunk and embed the ~1,868 legislative sections into `chroma_db/`. This process takes approximately 2–3 minutes. Subsequent startups are instantaneous.
+   > **Note on Initial Indexing:** On the initial startup, if the ChromaDB vector store is unindexed, the FastAPI backend will automatically chunk and embed the ~1,868 legislative sections into `chroma_db/`. This process takes approximately 2–3 minutes. Subsequent startups are instantaneous.
 
 4. Open your browser to `http://localhost:8501`.
 
