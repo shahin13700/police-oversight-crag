@@ -1,5 +1,6 @@
 # Police Oversight CRAG — Agentic Corrective RAG for Law Enforcement Legislation
 
+[![CI](https://github.com/shahin13700/police-oversight-crag/actions/workflows/ci.yml/badge.svg)](https://github.com/shahin13700/police-oversight-crag/actions/workflows/ci.yml)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
 [![LangGraph](https://img.shields.io/badge/orchestration-LangGraph-orange.svg)](https://github.com/langchain-ai/langgraph)
 [![FastAPI](https://img.shields.io/badge/backend-FastAPI-green.svg)](https://fastapi.tiangolo.com/)
@@ -7,9 +8,34 @@
 [![Docker](https://img.shields.io/badge/deployment-Docker%20Compose-blue.svg)](https://www.docker.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-A production-grade **Corrective RAG (CRAG)** pipeline engineered to answer natural-language Quality Assurance and statutory compliance inquiries across police oversight legislation, demonstrated using Ontario's comprehensive policing framework as the reference knowledge base.
+An agentic **Corrective RAG (CRAG)** pipeline built with LangGraph to answer natural-language compliance and quality assurance questions over police oversight legislation, using Ontario's policing legislative framework as the reference knowledge base.
 
-Every response is strictly grounded in public statutes, enforces precise legal citations (e.g. `[CSPA s.79(3)(a)]`), provides transparent confidence indicators, and refuses to extrapolate beyond retrieved legislative authority.
+Every response is strictly grounded in retrieved statutory text, enforces verifiable legal citations (e.g. `[CSPA s.102(4)(a)]`), provides transparent retrieval confidence indicators, and suggests relevant legislative topics when an answer cannot be located in the corpus.
+
+---
+
+## Example Q&A (Verbatim Benchmark Output)
+
+Below is an actual query and generation output from the committed benchmark run ([`evaluation/results_2026-04-02.json`](evaluation/results_2026-04-02.json), Question 7):
+
+> **User Query:**  
+> *"Does public legislation require or imply expectations related to risk identification or monitoring in policing, and how are these reflected in oversight activities?"*
+>
+> 🟢 **High Confidence (RRF Score: 0.0326)** | **LLM Judge Score: 1.00 / 1.00**
+>
+> Based on the provided legislative sections, specific statutory duties concerning risk identification imposed directly on police services are not explicitly detailed. The provided sections do not address this question directly. Please consult the specific Part of the Act regarding Police Service Duties for more information.
+>
+> However, the provided sections outline the Inspector General of Policing's duties and powers to monitor police services and ensure compliance with legislative mandates:
+>
+> 1. **Monitoring and Inspections:** The Inspector General shall monitor and conduct inspections of police services and police service boards to ensure that they comply with the Act and the regulations [CSPA s.102(4)(a)].
+> 2. **Compliance Advice:** The Inspector General shall consult with and advise police service boards and chiefs of police regarding compliance with the Act and the regulations [CSPA s.102(4)(b)].
+> 3. **Records and Research:** The Inspector General shall develop, maintain, and manage records and conduct research and analyses regarding compliance with the Act and the regulations [CSPA s.102(4)(d)].
+> 4. **Complaints and Misconduct:** The Inspector General shall deal with complaints and with disclosures of misconduct [CSPA s.102(4)(e)].
+> 5. **Orders for Adequate Policing:** The Inspector General may make an order requiring a police service board or the Commissioner to ensure adequate and effective policing is provided in an area if he or she finds that adequate and effective policing is not being provided or that an emergency exists [CSPA s.20(1)].
+>
+> While the Minister has duties to provide advice concerning security risks and mitigation strategies, this is a Ministerial function rather than a direct police service obligation in the provided text [CSPA s.3(1)(k)].
+>
+> **Sources Cited:** `CSPA s.3(1)(k)`, `CSPA s.20(1)`, `CSPA s.102(4)(a)`, `CSPA s.102(4)(b)`, `CSPA s.102(4)(d)`, `CSPA s.102(4)(e)`
 
 ---
 
@@ -17,13 +43,13 @@ Every response is strictly grounded in public statutes, enforces precise legal c
 
 Interpreting provincial police oversight legislation is cognitively demanding and error-prone. The corpus spans hundreds of pages of legal text across:
 - **Community Safety and Policing Act, 2019 (CSPA)**
-- **28 Ontario Regulations** (e.g., O.Reg 392/23, 394/23)
-- **16 Law Enforcement Complaints Agency (LECA)** Guideline PDFs
-- **~1,868 indexed chunks** in a persistent vector index
+- **28 Ontario Regulations** (e.g., O. Reg. 392/23, O. Reg. 394/23)
+- **12 Law Enforcement Complaints Agency (LECA)** Practice Guidelines and Rules of Procedure
+- **~1,843 indexed chunks** in a persistent vector index (see [`data/raw/MANIFEST.md`](data/raw/MANIFEST.md))
 
-**Police Oversight CRAG** solves this high-stakes legal compliance problem through autonomous, self-correcting retrieval and deterministic citation enforcement:
-1. **Never Hallucinates General Knowledge:** If an answer cannot be located in the corpus, the system explicitly acknowledges the gap and suggests relevant statute topics.
-2. **Deterministic Citation Enforcement:** Every substantive assertion must cite its statutory authority (`[CSPA s.X(Y)]`).
+**Police Oversight CRAG** implements a self-correcting legal retrieval pipeline:
+1. **Corpus Grounding & Topic Routing:** The generator prompt strictly confines answers to retrieved statutory context and states when information is not found in the corpus while suggesting relevant legislative topics; the relevance grader gates generation on ≥2 relevant chunks.
+2. **Deterministic Statutory Citations:** Every substantive assertion must cite its statutory authority (`[CSPA s.X(Y)]`, `[O. Reg. 392/23 s.23]`, `[LECA Guideline 001]`).
 3. **Retrieval Confidence Scoring:** Computes confidence indicators (🟢 High / 🟡 Medium / 🔴 Low) derived from reciprocal rank fusion (RRF) scores.
 
 ---
@@ -56,40 +82,67 @@ flowchart TD
 
 ### Node Specifications
 
-| Node | Function | Model / Service | Latency |
-|---|---|---|---|
-| **Router** | Classifies query as `retrieval` or `conversational` | Groq `llama-3.3-70b-versatile` (temp=0) | ~300ms |
-| **Hybrid Retriever** | BM25 keyword matching + ChromaDB dense search with Reciprocal Rank Fusion (k=60) | `rank_bm25` + ChromaDB (Cosine) | ~80ms |
-| **Reranker** | Cross-encoder scoring of retrieved candidate pairs | Cohere `rerank-v4.0-fast` API | ~180ms |
-| **Relevance Grader** | Evaluates candidate chunks; verifies at least 2 relevant sections | Groq `llama-3.3-70b-versatile` (temp=0) | ~350ms |
-| **Query Rewriter** | Rewrites non-statutory or conversational phrasing into formal legislative language (max 2 retries) | Groq `llama-3.3-70b-versatile` (temp=0.3) | ~400ms |
-| **Generator** | Synthesizes plain-language answer strictly bound to retrieved sections with bracketed citations | Groq `llama-3.3-70b-versatile` (temp=0.1) | ~1.2s |
+| Node | Function | Model / Component |
+|---|---|---|
+| **Router** | Classifies query as `retrieval` or `conversational` | Groq `llama-3.3-70b-versatile` (temp=0) |
+| **Hybrid Retriever** | BM25 keyword matching + ChromaDB dense search with Reciprocal Rank Fusion (k=60) | `rank_bm25` + ChromaDB (Cosine) |
+| **Reranker** | Cross-encoder scoring of retrieved candidate pairs | Cohere `rerank-v4.0-fast` API |
+| **Relevance Grader** | Evaluates candidate chunks; verifies at least 2 relevant sections | Groq `llama-3.3-70b-versatile` (temp=0) |
+| **Query Rewriter** | Rewrites non-statutory or conversational phrasing into formal legislative language (max 2 retries) | Groq `llama-3.3-70b-versatile` (temp=0.3) |
+| **Generator** | Synthesizes plain-language answer strictly bound to retrieved sections with bracketed citations | Groq `llama-3.3-70b-versatile` (temp=0.1) |
+
+*For in-depth node implementations, prompts, and schema details, see [`ARCHITECTURE.md`](ARCHITECTURE.md).*
 
 ---
 
 ## Key Engineering Decisions
 
-1. **Why CRAG Over Naive RAG?**
+1. **Why CRAG Over Naive RAG?**  
    Naive RAG unconditionally feeds top-k retrieved chunks into the generator. In legal text, passing irrelevant or tangential sections causes severe legal hallucination or misattribution. CRAG adds an active grading gate: if retrieved chunks lack relevance, the query is rewritten into statutory terminology and retrieved again before synthesis.
-2. **Hybrid Search via Reciprocal Rank Fusion (k=60):**
-   Legal queries often contain exact numeric section tags (`s.11(1)`) or formal acronyms (`LECA`, `SIU`, `OPP`) where dense vector embeddings struggle. Conversely, broad semantic queries fail under pure keyword matching. Combining BM25Okapi and dense embeddings via Reciprocal Rank Fusion (RRF score = Σ 1 / (60 + rank)) captures both precision and conceptual recall.
-3. **Cross-Encoder Reranking Before Grading:**
+2. **Hybrid Search via Reciprocal Rank Fusion (k=60):**  
+   Legal queries often contain exact numeric section tags (`s.11(1)`) or formal acronyms (`LECA`, `SIU`, `OPP`) where dense vector embeddings struggle. Conversely, broad semantic queries fail under pure keyword matching. Combining BM25Okapi and dense embeddings via Reciprocal Rank Fusion ($RRF = \sum \frac{1}{60 + rank}$) captures both keyword precision and conceptual recall.
+3. **Cross-Encoder Reranking Before Grading:**  
    RRF merges ranks without evaluating semantic relevance. Placing Cohere's cross-encoder reranker between RRF and the Grader ensures the most contextually relevant sections are evaluated first.
-4. **Decoupled Client & Microservice Architecture:**
+4. **Decoupled Client & Microservice Architecture:**  
    FastAPI handles ingestion, embedding, vector search, and LangGraph execution. The Streamlit frontend interacts over REST, allowing independent scaling, separate container lifecycles, and zero heavy model dependencies in the UI.
 
 ---
 
-## Evaluation & Benchmarks
+## Evaluation & Benchmark Results
 
 The pipeline was benchmarked using an automated **LLM-as-a-Judge** framework evaluated against 12 complex statutory QA scenarios covering chief duties, misconduct complaint procedures, police service board obligations, and Inspector General powers.
 
 > [!NOTE]
-> Benchmark run on 2026-04-02 against the baseline production build (`evaluation/results_2026-04-02.json`). The open-source release differs only in naming, branding, and configuration defaults; retrieval and generation logic is unchanged.
+> Benchmark run on 2026-04-02 against the baseline production build ([`evaluation/results_2026-04-02.json`](evaluation/results_2026-04-02.json)). The open-source release differs only in naming, branding, and configuration defaults; retrieval and generation logic is unchanged.
 
-- **Curated Benchmark Score:** **12/12 passed**
-- **Citation Accuracy:** All 12 evaluation answers cited the correct statutory authority (e.g., `[CSPA s.79(3)(a)]`).
-- **Topic Completeness:** Evaluated on multi-part statutory tests with >85% topic coverage per scenario.
+### Aggregate Metrics
+
+- **Benchmark Pass Rate:** **12/12 passed (100%)**
+- **Citation Accuracy:** **12/12 passed (100%)** — All 12 evaluation answers cited verified statutory authority (e.g., `[CSPA s.102(4)(a)]`).
+- **LLM Judge Average:** **0.93 / 1.00**
+  - **Faithfulness:** **1.00 / 1.00** (mean 0.996) — Grounded strictly in retrieved legislative excerpts without external hallucinations.
+  - **Relevance:** **0.93 / 1.00** — Directly answers the regulatory scenario.
+  - **Completeness:** **0.85 / 1.00** — Comprehensive coverage of statutory provisions.
+- **Statutory Topic Coverage:** **65.0% mean** across multi-point legislative criteria (range: 20% to 80%).
+
+### Per-Scenario Evaluation Table
+
+The table below reflects the exact per-question results from the committed benchmark receipt ([`evaluation/results_2026-04-02.json`](evaluation/results_2026-04-02.json)):
+
+| # | Category | Scenario Summary | Citation Verified | Topic Coverage | LLM Judge Avg | Faithfulness | Relevance | Completeness | Status |
+|---|---|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| 1 | Foundational Oversight & QA | QA expectations for Ontario police services | Passed | 80% | 1.00 | 1.00 | 1.00 | 1.00 | Passed |
+| 2 | Foundational Oversight & QA | Oversight bodies and operational roles | Passed | 80% | 1.00 | 1.00 | 1.00 | 1.00 | Passed |
+| 3 | Inspectorate of Policing | Compliance and quality reviews by IG | Passed | 60% | 0.93 | 1.00 | 1.00 | 0.80 | Passed |
+| 4 | Inspectorate of Policing | Public evidence examined during inspections | Passed | 80% | 0.90 | 1.00 | 0.90 | 0.80 | Passed |
+| 5 | Complaints & Standards | LECA quality assurance expectations | Passed | 80% | 0.93 | 1.00 | 1.00 | 0.80 | Passed |
+| 6 | Complaints & Standards | Public complaints role in governance | Passed | 60% | 0.92 | 1.00 | 0.90 | 0.85 | Passed |
+| 7 | Risk & Continuous Improvement | Risk identification & monitoring expectations | Passed | 80% | 1.00 | 1.00 | 1.00 | 1.00 | Passed |
+| 8 | Risk & Continuous Improvement | Systematic failure & continuous improvement | Passed | 60% | 0.93 | 1.00 | 0.90 | 0.90 | Passed |
+| 9 | QA Checklists | Public complaints handling QA checklist | Passed | 60% | 0.93 | 1.00 | 1.00 | 0.80 | Passed |
+| 10 | QA Checklists | Use of force reporting & review checklist | Passed | 40% | 1.00 | 1.00 | 1.00 | 1.00 | Passed |
+| 11 | QA Checklists | Detention & custody management QA questions | Passed | 20% | 0.68 | 0.95 | 0.60 | 0.50 | Passed |
+| 12 | QA Checklists | Detention & custody QA checklist | Passed | 80% | 0.90 | 1.00 | 0.90 | 0.80 | Passed |
 
 Run evaluations locally:
 ```bash
@@ -98,17 +151,13 @@ python evaluation/run_eval.py
 
 ---
 
-## Tech Stack
+## Limitations
 
-- **Orchestration:** LangGraph (StateGraph, conditional edges, retry loops)
-- **Inference:** Groq API (`llama-3.3-70b-versatile`)
-- **Embeddings:** OpenRouter API (`openai/text-embedding-3-small`, 1536-dimensional)
-- **Reranker:** Cohere API (`rerank-v4.0-fast`)
-- **Vector Database:** ChromaDB (persistent, cosine distance)
-- **Lexical Search:** `rank_bm25` (BM25Okapi)
-- **Backend:** FastAPI, Pydantic v2, Uvicorn
-- **Frontend:** Streamlit with custom CSS design, theme toggle, and Word session export (`python-docx`)
-- **Containerization:** Docker Compose (multi-container microservice)
+1. **Corpus Snapshot:** Corpus snapshot committed April 2026; consult [Ontario e-Laws](https://www.ontario.ca/laws) for amendments enacted after this snapshot.
+2. **Single-Hop Statutory Scope:** Designed for direct statutory interpretation over the CSPA, associated regulations, and LECA guidelines. It does not synthesize multi-hop case law precedents or federal criminal statutes (e.g., Criminal Code of Canada).
+3. **Evaluation Suite Size:** The automated LLM-as-a-Judge benchmark is validated across 12 curated multi-scenario evaluations.
+4. **External API Dependencies:** Requires operational API keys for Groq (`llama-3.3-70b-versatile`), OpenRouter (`openai/text-embedding-3-small`), and Cohere (`rerank-v4.0-fast`).
+5. **Language:** English-language statutory texts and queries only.
 
 ---
 
@@ -135,7 +184,7 @@ python evaluation/run_eval.py
    ```bash
    docker compose up --build
    ```
-   > **Note on Initial Indexing:** On the initial startup, if the ChromaDB vector store is unindexed, the FastAPI backend will automatically chunk and embed the ~1,868 legislative sections into `chroma_db/`. This process takes approximately 2–3 minutes. Subsequent startups are instantaneous.
+   > **Note on Initial Indexing:** On initial startup, if the ChromaDB vector store is unindexed, the FastAPI backend will automatically chunk and embed the ~1,843 legislative sections into `chroma_db/`. This process takes approximately 2–3 minutes. Subsequent startups are instantaneous.
 
 4. Open your browser to `http://localhost:8501`.
 
@@ -159,7 +208,7 @@ python evaluation/run_eval.py
    pip install -r requirements.txt
    ```
 
-3. **Setup environment:**
+3. **Configure environment:**
    ```bash
    cp .env.example .env
    # Edit .env and supply your API keys
@@ -179,44 +228,16 @@ python evaluation/run_eval.py
 
 ## Testing
 
-The project includes an extensive unit test suite covering chunking, lexical retrieval, hybrid RRF fusion, and vector operations.
+The project includes an offline unit test suite covering chunking, lexical retrieval, hybrid RRF fusion, and vector operations.
 
 To run tests offline without external API dependencies:
 ```bash
 pytest tests/
 ```
 
-To run linter checks (syntax and undefined names):
+To run linter checks:
 ```bash
 ruff check --select E9,F63,F7,F82 .
-```
-
----
-
-## Repository Structure
-
-```
-police-oversight-crag/
-├── data/raw/                 # Public statutes: CSPA 2019 .docx, Regulations, LECA PDFs
-├── evaluation/               # LLM-as-a-judge evaluation harness & test QA pairs
-├── scripts/                  # Batch indexing and verification scripts
-├── src/
-│   ├── agent/                # LangGraph state machine, conditional edges, and nodes
-│   │   ├── nodes/            # router, retriever, reranker, grader, rewriter, generator
-│   │   ├── graph.py          # StateGraph compilation
-│   │   └── state.py          # AgentState schema
-│   ├── api/                  # FastAPI backend server
-│   ├── embeddings/           # OpenRouter embeddings client (1536-d)
-│   ├── ingestion/            # Statutory docx and PDF chunking engines
-│   ├── retrieval/            # BM25, hybrid retriever, RRF, and confidence scoring
-│   ├── ui/                   # Streamlit production and local UI + Word export
-│   └── vectorstore/          # ChromaDB collection management
-├── tests/                    # Pytest test suite
-├── docker-compose.yml        # Two-tier service composition (API + UI)
-├── Dockerfile.api            # Backend container definition
-├── Dockerfile.ui             # Streamlit container definition
-├── ARCHITECTURE.md           # Exhaustive technical reference
-└── README.md
 ```
 
 ---
@@ -225,4 +246,6 @@ police-oversight-crag/
 
 - **Statutes & Regulations:** The text of the *Community Safety and Policing Act, 2019* and associated Regulations are © King's Printer for Ontario and are sourced from [Ontario e-Laws](https://www.ontario.ca/laws). Used in accordance with the Ontario e-Laws Terms of Use.
 - **Guideline Publications:** Practice guidelines and materials are © Law Enforcement Complaints Agency (LECA) and are used for statutory QA analysis.
-- **Software Codebase:** Distributed under the [MIT License](LICENSE).
+- **Data Manifest:** See [`data/raw/MANIFEST.md`](data/raw/MANIFEST.md) for full document listings, regulation numbers, and source links.
+- **System Architecture:** See [`ARCHITECTURE.md`](ARCHITECTURE.md) for detailed component references and LangGraph state wiring.
+- **Software License:** Distributed under the [MIT License](LICENSE).

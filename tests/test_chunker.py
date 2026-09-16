@@ -235,3 +235,45 @@ class TestChunkDocument:
         doc = Document()
         chunks = chunk_document(doc, source_doc="EMPTY")
         assert chunks == []
+
+
+# ---------------------------------------------------------------------------
+# Tests for PDF slug and legacy filename citation mapping
+# ---------------------------------------------------------------------------
+
+class TestPdfSourceDocMapping:
+    """Parametrized tests verifying slug -> source_doc mapping and citation stability."""
+
+    @pytest.mark.parametrize(
+        "filename, expected_source_doc",
+        [
+            ("LECA_001_Reviewing_Complaints.pdf", "LECA Guideline 001 — Reviewing Complaints"),
+            ("LECA_002_Retaining_Referring_Complaints.pdf", "LECA Guideline 002 — Retaining Referring Complaints"),
+            ("LECA_003_Notice_Inquiry_Examination.pdf", "LECA Guideline 003 — Notice Inquiry Examination"),
+            ("LECA_004_Investigative_Reports.pdf", "LECA Guideline 004 — Investigative Reports"),
+            ("LECA_005_LECA_Prosecutions.pdf", "LECA Guideline 005 — LECA Prosecutions"),
+            ("LECA_006_Notifications_Solicitor_General.pdf", "LECA Guideline 006 — Notifications Solicitor General"),
+            ("LECA_007_Notifications_Chiefs_Commissioner.pdf", "LECA Guideline 007 — Notifications Chiefs Commissioner"),
+            ("LECA_008_Notifications_Police_Services_Boards.pdf", "LECA Guideline 008 — Notifications Police Services Boards"),
+            ("LECA_009_Notifications_Inspector_General.pdf", "LECA Guideline 009 — Notifications Inspector General"),
+            ("LECA_010_Notifications_SIU.pdf", "LECA Guideline 010 — Notifications SIU"),
+            ("LECA_011_French_Language_Complaints.pdf", "LECA Guideline 011 — French Language Complaints"),
+            ("LECA_Rules_of_Procedure.pdf", "LECA Rules"),
+            # Legacy filename pattern backward compatibility
+            ("001-Guideline for Reviewing Complaints.pdf", "LECA Guideline 001 — Reviewing Complaints"),
+            ("011-Guideline for French Language Complaints.pdf", "LECA Guideline 011 — French Language Complaints"),
+        ]
+    )
+    def test_extract_pdf_source_doc(self, filename, expected_source_doc):
+        from src.ingestion.pdf_chunker import extract_pdf_source_doc
+        assert extract_pdf_source_doc(filename) == expected_source_doc
+
+    def test_pdf_citation_byte_exact(self):
+        """Verify byte-for-byte exact citation generation matching evaluation benchmark."""
+        from src.ingestion.pdf_chunker import chunk_pdf
+        pages = ["PURPOSE\nThis is the purpose statement for French language services."]
+        chunks = chunk_pdf("LECA_011_French_Language_Complaints.pdf", pages)
+        assert len(chunks) == 1
+        assert chunks[0].source_doc == "LECA Guideline 011 — French Language Complaints"
+        assert chunks[0].section_title == "PURPOSE"
+        assert chunks[0].citation() == "LECA Guideline 011 — French Language Complaints — PURPOSE"

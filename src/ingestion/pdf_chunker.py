@@ -8,27 +8,42 @@ import re
 from pathlib import Path
 from src.ingestion.chunker import LegislativeChunk
 
+
+def extract_pdf_source_doc(filename: str) -> str:
+    """
+    Extracts canonical source_doc name from a LECA PDF filename or slug.
+    Supports both standardized slugs (LECA_001_...) and legacy filenames.
+    """
+    filename_clean = Path(filename).stem
+
+    # 1. Standardized slug format: LECA_001_Reviewing_Complaints
+    match_slug = re.match(r"^LECA_(\d+)_(.*)", filename_clean, re.IGNORECASE)
+    if match_slug:
+        num = match_slug.group(1)
+        title = match_slug.group(2).replace("_", " ").replace("-", " ").strip()
+        return f"LECA Guideline {num} \u2014 {title}"
+
+    # 2. Legacy filename format: 001-Guideline for Reviewing Complaints
+    match_legacy = re.match(r"^(\d+)[-\u2013\s]+Guideline\s+(?:for\s+)?(.*)", filename_clean, re.IGNORECASE)
+    if match_legacy:
+        num = match_legacy.group(1)
+        title = match_legacy.group(2).replace("-", " ").strip()
+        return f"LECA Guideline {num} \u2014 {title}"
+
+    # 3. Rules of Procedure
+    if "rules" in filename_clean.lower():
+        return "LECA Rules"
+
+    # 4. Fallback
+    return f"LECA \u2014 {filename_clean.replace('_', ' ').strip()}"
+
+
 def chunk_pdf(filename: str, pages: list[str]) -> list[LegislativeChunk]:
     chunks: list[LegislativeChunk] = []
-    
-    # Extract guideline name from filename
-    filename_clean = Path(filename).stem
-    
-    # E.g. 001-Guideline for Reviewing Complaints -> LECA Guideline 001 — Reviewing Complaints
-    match = re.match(r'^(\d+)[-–\s]+Guideline\s+(?:for\s+)?(.*)', filename_clean, re.IGNORECASE)
-    if match:
-        doc_name = f"LECA Guideline {match.group(1)} — {match.group(2).replace('-', ' ').strip()}"
-    elif "Rules of Procedure" in filename_clean:
-        doc_name = "LECA Rules"
-    else:
-        doc_name = f"LECA — {filename_clean}"
-        
-    source_doc = doc_name
-    
+    source_doc = extract_pdf_source_doc(filename)
+
     current_title: str = ""
     current_lines: list[str] = []
-    
-    # PDFs don't typically have "Parts" in the same way, we can use "GENERAL"
     current_part: str = "GENERAL"
 
     def save_chunk():
@@ -43,35 +58,34 @@ def chunk_pdf(filename: str, pages: list[str]) -> list[LegislativeChunk]:
                     source_doc=source_doc
                 ))
 
-    # We concatenate all pages and split by lines
+    # Concatenate all pages and split by lines
     all_lines = []
     for page in pages:
         all_lines.extend(page.splitlines())
-        
+
     for line in all_lines:
         line = line.strip()
         if not line:
             continue
-            
+
         # Heuristic for headings: ALL CAPS or Title Case without trailing punctuation
-        # Also limit length since headings are usually short
         is_heading = False
         if line.isupper() and len(line) < 100:
             is_heading = True
-        elif not line.endswith('.') and not line.endswith(':') and len(line) > 2 and len(line.split()) < 10:
+        elif not line.endswith(".") and not line.endswith(":") and len(line) > 2 and len(line.split()) < 10:
             # Check if majority of words are capitalized
             words = [w for w in line.split() if len(w) > 3]
             if words and all(w[0].isupper() for w in words):
                 is_heading = True
-                
+
         if is_heading:
             save_chunk()
             current_title = line
             current_lines = [line]
             continue
-            
+
         if current_title:
             current_lines.append(line)
-            
+
     save_chunk()
     return chunks

@@ -1,6 +1,6 @@
-# Ontario Oversight CRAG — System Architecture & Technical Reference
+# Police Oversight CRAG — System Architecture & Technical Reference
 
-**Project**: Legal AI Engineering Portfolio  
+**Project**: Police Oversight CRAG  
 **Domain**: Ontario Police Oversight Legislation (CSPA 2019 & Regulations)  
 **Purpose**: Agentic Corrective RAG (CRAG) pipeline for answering compliance and QA questions about Ontario police oversight legislation with strict, verifiable section citations.
 
@@ -26,13 +26,12 @@ This document is the technical architecture reference for developers and reviewe
 16. [Design decisions](#13-key-design-decisions)
 17. [UI features](#14-ui-features)
 18. [File reference](#15-file-reference)
-19. [NotebookLM slide prompt](#notebooklm--prompt-for-slide-deck-generation)
 
 ---
 
 ## Problem Statement
 
-Legal compliance and oversight QA professionals need fast, accurate answers grounded in Ontario police oversight legislation (CSPA, O.Regs, LECA). Manual lookup across hundreds of pages of legislation is slow and error-prone. Ontario Oversight CRAG automates this with an agentic AI pipeline that always cites the specific legislative section behind every answer.
+Legal compliance and oversight QA professionals need fast, accurate answers grounded in Ontario police oversight legislation (CSPA, O.Regs, LECA). Manual lookup across hundreds of pages of legislation is slow and error-prone. Police Oversight CRAG automates this with an agentic AI pipeline that always cites the specific legislative section behind every answer.
 
 ---
 
@@ -389,176 +388,3 @@ class QueryResponse(BaseModel):
 **File**: `evaluation/run_eval.py`  
 **Test set**: `evaluation/qa_pairs.json` — 12 QA pairs
 
-### Categories
-1. Foundational Oversight and QA (2 questions)
-2. Inspectorate of Policing (2 questions)
-3. LECA / Complaints and Professional Standards (2 questions)
-4. Risk, Monitoring, and Continuous Improvement (2 questions)
-5. QA Checklists (4 questions)
-
-### Scoring
-
-**Citation score (50% weight)**: Binary — 1.0 if any citation found matching regex, else 0.0  
-Citation regex covers `CSPA s.X(Y)`, `O. Reg. NNN/NN s.X`, `LECA Guideline N`, `LECA Rules`
-
-**Topic score (50% weight)**: `found_topics / expected_topics` — case-insensitive substring match
-
-**Overall**: `(citation_score × 0.5) + (topic_score × 0.5) ≥ 0.5` → PASS
-
-**LLM Judge (Qwen via OpenRouter)**: Optional deeper evaluation on:
-- `faithfulness` — answer grounded in retrieved chunks?
-- `relevance` — directly answers the question?
-- `completeness` — covers expected topics?
-
-**Phase 2 result**: 100% (12/12 passed)
-
-Results saved to `evaluation/results_YYYY-MM-DD.json` with full per-question breakdown.
-
----
-
-## 10. Deployment Architecture
-
-### Local Development (one terminal)
-```
-streamlit run src/ui/app.py
-```
-Pipeline runs in-process. No backend server needed.
-
-### Production / Azure (two containers)
-```
-Container 1 — FastAPI backend:
-  uvicorn src.api.main:app --host 0.0.0.0 --port 8000
-
-Container 2 — Streamlit frontend:
-  streamlit run src/ui/app_prod.py --server.port 8501
-  (env: API_URL=http://<fastapi-container-url>:8000)
-```
-
-**Azure gotcha**: ChromaDB is file-based — containers are ephemeral. Azure Blob Storage must be mounted to `chroma_db/` to persist the index across restarts. Without this, the pipeline re-indexes on every cold start.
-
----
-
-## 11. Models & APIs Summary
-
-| Component | Model / Service | Provider | Notes |
-|---|---|---|---|
-| LLM — all nodes | llama-3.3-70b-versatile | Groq | LPU hardware — ~10x faster than GPU inference |
-| Embeddings | openai/text-embedding-3-small | OpenRouter | 1536d, temp swap (bge-m3 provider down) |
-| Reranker | rerank-v4.0-fast | Cohere | Dec 2025 release, 32k context, cloud API |
-| Eval Judge | qwen/qwen3.5-plus-02-15 | OpenRouter | Eval only — never used in prod pipeline |
-
-### Why Groq?
-Groq LPUs (Language Processing Units) are purpose-built inference chips. The pipeline makes 3–5 sequential LLM calls per query. Groq delivers sub-second inference per call (~300ms), keeping total pipeline latency under 5 seconds.
-
-### Why Cohere Reranker?
-- Cloud API — no GPU required on demo laptop (CPU-only)
-- One API call scores all chunks simultaneously (faster than local sequential inference)
-- `rerank-v4.0-fast` released Dec 2025: 32k token context, multilingual, purpose-built for relevance
-- Free tier: 1,000 calls/month — sufficient for dev and demo
-
-### Why Hybrid Retrieval?
-Legal text contains specific identifiers (`s.11(1)`, `OPP`, `SIU`) that dense embeddings handle poorly. BM25 catches exact term matches; vector search catches semantic matches. RRF fusion gets the best of both without tuning weights.
-
----
-
-## 12. Technology Stack
-
-| Layer | Technology |
-|---|---|
-| Agent framework | LangGraph |
-| LLM inference | Groq API (llama-3.3-70b-versatile) |
-| Embedding API | OpenRouter (openai/text-embedding-3-small) |
-| Reranking | Cohere Rerank API (rerank-v4.0-fast) |
-| Vector store | ChromaDB (persistent, cosine similarity) |
-| Keyword search | rank_bm25 (BM25Okapi) |
-| Fusion algorithm | Reciprocal Rank Fusion (k=60) |
-| Backend API | FastAPI |
-| Frontend UI | Streamlit |
-| Document parsing | python-docx, pdfplumber |
-| Language | Python 3.11+ |
-| Cloud | Azure Container Apps |
-
----
-
-## 13. Key Design Decisions
-
-**1. CRAG over naive RAG**  
-Naive RAG always passes retrieved chunks to the generator — even irrelevant ones. CRAG adds a Grader that validates relevance and rewrites the query if needed. Critical for legal text where a wrong citation is worse than no answer.
-
-**2. Hybrid retrieval over vector-only**  
-Legal text contains specific section numbers (`s.11(1)`) and acronyms (`OPP`, `SIU`, `LECA`) that dense embeddings handle poorly. BM25 catches exact keyword matches; vector search catches semantic matches. RRF fusion without weight tuning.
-
-**3. Cohere reranker between RRF and Grader**  
-RRF ranks by retrieval score, not question relevance. The cross-encoder reranker scores each (question, chunk) pair directly — the Grader sees the most relevant chunks first, reducing false negatives.
-
-**4. Groq for all LLM nodes**  
-3–5 LLM calls per query (router + grader × N + generator). Speed is critical for a live demo and production UX. Groq LPUs deliver ~300ms per call vs ~2–3s on standard GPU inference.
-
-**5. Citation enforcement in Generator**  
-Every claim must cite a specific legislative section. System prompt is strict: never answer from own knowledge, always end with a Sources section. This is the #1 compliance requirement for legislative QA.
-
-**6. Separate local vs. prod UI**  
-`app.py` runs pipeline directly (one terminal, local dev). `app_prod.py` calls FastAPI over HTTP (two containers, Azure). Keeps deployment concerns out of the pipeline code entirely.
-
----
-
-## 14. UI Features
-
-### Local UI (`src/ui/app.py`) — one terminal
-- Chat interface with dark/light theme toggle
-- Confidence indicator — 🟢 High / 🟡 Medium / 🔴 Low above each answer
-- Source expander — shows citation, section title, and RRF score for each retrieved chunk
-- **Copy answer button** — native HTML clipboard button per answer; shows "Copied!" for 1.5s then resets
-- **Export Session to Word** — sidebar button downloads full Q&A session as formatted `.docx`
-
-### Production UI (`src/ui/app_prod.py`) — two terminals (FastAPI + Streamlit)
-- Identical UI to app.py
-- All pipeline calls replaced with HTTP requests to FastAPI backend
-- `API_URL` env var points to backend (default: `http://localhost:8000`)
-
-### Export Module (`src/ui/export.py`)
-
-`build_session_docx(messages, sources) -> bytes`
-
-- Iterates `st.session_state.messages` as user/assistant pairs
-- Sources passed as separate dict keyed by message index (`st.session_state.sources`)
-- Output includes: Report header, export timestamp, each Q&A numbered, confidence label, answer text, cited sources as bullet list
-- Returns raw bytes for `st.download_button`
-- No new dependencies — uses `python-docx` already in requirements
-
----
-
-## 15. File Reference
-
-| File | Purpose |
-|---|---|
-| `src/ingestion/pipeline.py` | `run_ingestion()` — master ingestion orchestrator |
-| `src/ingestion/chunker.py` | CSPA .docx chunker, `LegislativeChunk` dataclass |
-| `src/ingestion/reg_chunker.py` | Ontario Regulations .docx chunker |
-| `src/ingestion/pdf_chunker.py` | LECA PDF chunker |
-| `src/ingestion/loader.py` | `load_docx()`, `load_pdf()` |
-| `src/embeddings/embedder.py` | OpenRouter embedding API, batch + retry logic |
-| `src/vectorstore/store.py` | ChromaDB: `get_collection()`, `index_chunks()`, `query()` |
-| `src/retrieval/bm25_retriever.py` | `BM25Retriever`, legal-aware tokenizer |
-| `src/retrieval/hybrid_retriever.py` | `HybridRetriever`, `reciprocal_rank_fusion()` |
-| `src/retrieval/confidence.py` | `compute_confidence()` — RRF score → label |
-| `src/retrieval/reranker.py` | Cohere API singleton, `rerank()` |
-| `src/agent/state.py` | `AgentState` TypedDict, `take_latest` merge |
-| `src/agent/nodes/router.py` | `route_question()` |
-| `src/agent/nodes/retriever.py` | `retrieve_chunks()`, HybridRetriever singleton |
-| `src/agent/nodes/reranker.py` | `rerank_chunks()` LangGraph node |
-| `src/agent/nodes/grader.py` | `grade_chunks()`, min 2 relevant threshold |
-| `src/agent/nodes/rewriter.py` | `rewrite_query()`, max 2 rewrites |
-| `src/agent/nodes/generator.py` | `generate_answer()`, citation enforcement |
-| `src/agent/graph.py` | `build_graph()`, `run_query()`, all edges |
-| `src/api/main.py` | FastAPI: `/health`, `/query`, startup lifecycle |
-| `src/ui/app.py` | Streamlit local UI (direct pipeline, one terminal) |
-| `src/ui/app_prod.py` | Streamlit prod UI (calls FastAPI over HTTP) |
-| `src/ui/export.py` | `build_session_docx()` — exports Q&A session to Word |
-| `evaluation/run_eval.py` | LLM-as-a-Judge eval harness |
-| `evaluation/qa_pairs.json` | 12 ground-truth QA pairs |
-
----
-
-
-When using NotebookLM, upload **this file** and **`README.md`** as sources; add `CONTRIBUTING.md` only if the deck should cover team process and branching.
