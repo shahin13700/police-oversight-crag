@@ -16,26 +16,27 @@ Every response is strictly grounded in retrieved statutory text, enforces verifi
 
 ## Example Q&A (Verbatim Benchmark Output)
 
-Below is an actual query and generation output from the committed benchmark run ([`evaluation/results_2026-04-02.json`](evaluation/results_2026-04-02.json), Question 7):
+Below is an actual query and generation output from the committed benchmark run ([`evaluation/results_2026-04-02.json`](evaluation/results_2026-04-02.json), Question 3):
 
 > **User Query:**  
-> *"Does public legislation require or imply expectations related to risk identification or monitoring in policing, and how are these reflected in oversight activities?"*
+> *"What types of compliance or quality reviews can the Inspectorate of Policing conduct under public legislation?"*
 >
-> 🟢 **High Confidence (RRF Score: 0.0326)** | **LLM Judge Score: 1.00 / 1.00**
+> Based on the provided legislative sections, the Inspector General is authorized to conduct specific monitoring, inspections, and analyses to ensure compliance and address policing complaints. The provided text outlines the following types of reviews and oversight activities:
 >
-> Based on the provided legislative sections, specific statutory duties concerning risk identification imposed directly on police services are not explicitly detailed. The provided sections do not address this question directly. Please consult the specific Part of the Act regarding Police Service Duties for more information.
+> 1.  **Compliance Inspections and Monitoring:** The Inspector General must monitor and conduct inspections of police service boards, chiefs of police, police services, and prescribed policing providers to ensure they comply with the Act and the regulations [CSPA s.102(4)(a)].
+> 2.  **Board Member Misconduct Inspections:** The Inspector General must monitor and conduct inspections of members of police service boards to ensure that they do not commit misconduct [CSPA s.102(4)(c)].
+> 3.  **Compliance Research and Analysis:** The Inspector General is required to develop, maintain, and manage records and conduct research and analyses regarding compliance with the Act and the regulations [CSPA s.102(4)(d)].
+> 4.  **Complaint-Based Reviews:** The Inspector General deals with complaints regarding the adequacy and effectiveness of policing, failures to comply with the Act (other than misconduct), and policies or procedures established by boards or chiefs [CSPA s.102(4)(e)] [CSPA s.107(1)].
+> 5.  **Compliance Consultation:** The Inspector General consults with and advises police service boards and chiefs of police regarding compliance with the Act and the regulations [CSPA s.102(4)(b)].
 >
-> However, the provided sections outline the Inspector General of Policing's duties and powers to monitor police services and ensure compliance with legislative mandates:
+> Additionally, police service boards and chiefs of police are required to implement their own quality assurance processes relating to the provision of adequate and effective policing and compliance with the Act and regulations, which falls under the scope of regulatory compliance [O. Reg. 392/23 s.23].
 >
-> 1. **Monitoring and Inspections:** The Inspector General shall monitor and conduct inspections of police services and police service boards to ensure that they comply with the Act and the regulations [CSPA s.102(4)(a)].
-> 2. **Compliance Advice:** The Inspector General shall consult with and advise police service boards and chiefs of police regarding compliance with the Act and the regulations [CSPA s.102(4)(b)].
-> 3. **Records and Research:** The Inspector General shall develop, maintain, and manage records and conduct research and analyses regarding compliance with the Act and the regulations [CSPA s.102(4)(d)].
-> 4. **Complaints and Misconduct:** The Inspector General shall deal with complaints and with disclosures of misconduct [CSPA s.102(4)(e)].
-> 5. **Orders for Adequate Policing:** The Inspector General may make an order requiring a police service board or the Commissioner to ensure adequate and effective policing is provided in an area if he or she finds that adequate and effective policing is not being provided or that an emergency exists [CSPA s.20(1)].
+> ### Sources
+> *   CSPA s.102(4) — Inspector General's duties
+> *   CSPA s.107(1) — Policing complaints
+> *   O. Reg. 392/23 s.23 — Quality assurance
 >
-> While the Minister has duties to provide advice concerning security risks and mitigation strategies, this is a Ministerial function rather than a direct police service obligation in the provided text [CSPA s.3(1)(k)].
->
-> **Sources Cited:** `CSPA s.3(1)(k)`, `CSPA s.20(1)`, `CSPA s.102(4)(a)`, `CSPA s.102(4)(b)`, `CSPA s.102(4)(d)`, `CSPA s.102(4)(e)`
+> LLM Judge Score: 0.93 / 1.00
 
 ---
 
@@ -158,6 +159,16 @@ python evaluation/run_eval.py
 3. **Evaluation Suite Size:** The automated LLM-as-a-Judge benchmark is validated across 12 curated multi-scenario evaluations.
 4. **External API Dependencies:** Requires operational API keys for Groq (`llama-3.3-70b-versatile`), OpenRouter (`openai/text-embedding-3-small`), and Cohere (`rerank-v4.0-fast`).
 5. **Language:** English-language statutory texts and queries only.
+
+---
+
+## Prerequisites
+
+- Python 3.11+
+- Docker (optional)
+- `GROQ_API_KEY` ([console.groq.com](https://console.groq.com), free tier)
+- `COHERE_API_KEY` ([dashboard.cohere.com](https://dashboard.cohere.com), free trial tier)
+- `OPENROUTER_API_KEY` ([openrouter.ai](https://openrouter.ai), pay-per-use; one-time corpus indexing costs under $0.01)
 
 ---
 

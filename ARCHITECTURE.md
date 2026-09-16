@@ -200,7 +200,7 @@ Results sorted by index before extraction.
 Short tokens like "s", "OPP", "SIU" intentionally kept for legal relevance.
 
 **Algorithm**: `BM25Okapi` (standard Okapi BM25 with document length normalization)  
-Index built over all 1,868 chunks at startup.  
+Index built over all ~1,800 chunks at startup.  
 Returns top_k results with raw BM25 score and rank.
 
 ### Step 2 — Vector Search (`src/vectorstore/store.py`)
