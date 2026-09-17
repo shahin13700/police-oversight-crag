@@ -4,7 +4,6 @@ Run with:  streamlit run src/ui/app.py
 """
 import os, sys, base64, pathlib, tempfile
 from datetime import datetime
-from urllib.parse import quote
 import streamlit as st
 from dotenv import load_dotenv
 import json
@@ -27,22 +26,6 @@ div[role="progressbar"],div[role="progressbar"] *,
 .stProgress,.stProgress *{background:transparent!important;border-color:rgba(120,160,255,0.12)!important}
 </style>""", unsafe_allow_html=True)
 
-# ── Icons (raw SVG strings with customizable stroke color) ────────────
-I_SUN    = "M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
-I_MOON   = "M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
-I_BOOK   = "M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
-I_SEND   = "M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"
-I_CHECK  = "M5 13l4 4L19 7"
-I_SEARCH = "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-I_SCALE  = "M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"
-I_TRASH  = "M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
-
-def svg_i(path_d: str, stroke: str, size: int = 16) -> str:
-    inner = f'<path d="{path_d}"/>' if not path_d.startswith("<") else path_d
-    return f'<svg width="{size}" height="{size}" viewBox="0 0 24 24" fill="none" stroke="{stroke}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;display:inline-block;">{inner}</svg>'
-
-def svg_uri(svg: str) -> str:
-    return f"data:image/svg+xml,{quote(svg, safe='')}"
 
 # ── Theme icons ──
 def svg_sun(c):
@@ -285,8 +268,8 @@ accent_color = "#7ab0ff" if is_dark() else "#1a365d"
 
 # Write themed avatar SVGs to temp dir (cross-platform)
 _tmp = tempfile.gettempdir()
-_qa_path = os.path.join(_tmp, "ontario_crag_qa_avatar.svg")
-_book_path = os.path.join(_tmp, "ontario_crag_book_avatar.svg")
+_qa_path = os.path.join(_tmp, "police_crag_qa_avatar.svg")
+_book_path = os.path.join(_tmp, "police_crag_book_avatar.svg")
 with open(_qa_path, "w") as f:
     f.write(svg_qa(accent_color))
 with open(_book_path, "w") as f:
@@ -313,7 +296,7 @@ with st.sidebar:
     st.markdown(
         f'<div class="info-card">'
         f'<div class="info-row"><span class="info-lbl">{svg_i(I_CPU,ic)} Model</span><span class="info-val">{model_name}</span></div>'
-        f'<div class="info-row"><span class="info-lbl">{svg_i(I_DB,ic)} Source</span><span class="info-val">CSPA + O.Regs + LECA (~1,868 chunks)</span></div>'
+        f'<div class="info-row"><span class="info-lbl">{svg_i(I_DB,ic)} Source</span><span class="info-val">CSPA + O.Regs + LECA (~1,800 chunks)</span></div>'
         f'<div class="info-row"><span class="info-lbl">{svg_i(I_LAYERS,ic)} Retrieval</span><span class="info-val">Hybrid</span></div>'
         f'<div class="info-row"><span class="info-lbl">{svg_i(I_GIT,ic)} Fusion</span><span class="info-val">RRF (k=60)</span></div>'
         f'</div>', unsafe_allow_html=True)
@@ -335,7 +318,7 @@ with st.sidebar:
         st.download_button(
             label="📄 Export Session to Word",
             data=docx_bytes,
-            file_name=f"ontario_crag_session_{datetime.now().strftime('%Y%m%d_%H%M')}.docx",
+            file_name=f"police_crag_session_{datetime.now().strftime('%Y%m%d_%H%M')}.docx",
             mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
             use_container_width=True,
             key="export_btn",

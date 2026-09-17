@@ -118,13 +118,9 @@ The pipeline was benchmarked using an automated **LLM-as-a-Judge** framework eva
 
 ### Aggregate Metrics
 
-- **Benchmark Pass Rate:** **12/12 passed (100%)**
-- **Citation Accuracy:** **12/12 passed (100%)** — All 12 evaluation answers cited verified statutory authority (e.g., `[CSPA s.102(4)(a)]`).
-- **LLM Judge Average:** **0.93 / 1.00**
-  - **Faithfulness:** **1.00 / 1.00** (mean 0.996) — Grounded strictly in retrieved legislative excerpts without external hallucinations.
-  - **Relevance:** **0.93 / 1.00** — Directly answers the regulatory scenario.
-  - **Completeness:** **0.85 / 1.00** — Comprehensive coverage of statutory provisions.
-- **Statutory Topic Coverage:** **65.0% mean** across multi-point legislative criteria (range: 20% to 80%).
+- LLM-as-a-Judge average: 0.93 / 1.00 (faithfulness 1.00, relevance 0.93, completeness 0.85)
+- Mean overall score: 0.83 (citation 50% + topic coverage 50%; per-question range 0.60–0.90)
+- Pass criterion: overall score ≥ 0.5 — all 12 questions met it; every answer cited an expected statutory section
 
 ### Per-Scenario Evaluation Table
 

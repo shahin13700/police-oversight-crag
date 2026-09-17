@@ -34,8 +34,7 @@ Closes #<!-- issue number -->
 - [ ] No `.env` file or secrets committed
 
 ### Git
-- [ ] PR targets `develop`, not `main`
-- [ ] Branch was rebased on latest `develop` before opening this PR
+- [ ] PR targets main
 - [ ] Commit messages follow the Conventional Commits format
 
 ---
