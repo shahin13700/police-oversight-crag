@@ -13,8 +13,6 @@ We test:
 7. build() raises ValueError for empty input
 8. is_built and corpus_size properties work correctly
 
-Branch: feature/hybrid-retrieval-rrf
-Issue:  #6 — BM25 index builder
 """
 
 import pytest

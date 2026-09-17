@@ -14,8 +14,6 @@ We test:
 We use a temporary ChromaDB directory for each test so tests don't
 interfere with the real database in chroma_db/.
 
-Branch: feature/chromadb-vectorstore
-Issue:  #5 — ChromaDB vectorstore setup and indexing
 """
 
 import os

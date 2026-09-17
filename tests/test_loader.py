@@ -11,8 +11,6 @@ We test three things:
 We use a small sample .docx created in memory for testing so the tests
 don't depend on the real CSPA file being present (which is gitignored).
 
-Branch: feature/ingestion-docx-chunker
-Issue:  #2 — CSPA .docx loader
 """
 
 import os

@@ -21,8 +21,6 @@ Output:
     - Console report with per-question results
     - evaluation/results_YYYY-MM-DD.json with full results
 
-Branch: develop
-Issue:  #12 — Evaluation harness
 """
 
 import os

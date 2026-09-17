@@ -14,8 +14,6 @@ We test:
 We use a synthetic Document built in memory so tests don't depend on the
 real CSPA file being present (which is gitignored).
 
-Branch: feature/ingestion-docx-chunker
-Issue:  #3 — Section-aware legislative chunker
 """
 
 import pytest

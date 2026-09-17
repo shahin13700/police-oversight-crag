@@ -10,8 +10,6 @@ Re-running is safe — upsert() won't create duplicates.
 Usage:
     python scripts/index_all.py
 
-Branch: feature/chromadb-vectorstore
-Issue:  #5 — ChromaDB vectorstore setup and indexing
 """
 
 import sys
@@ -29,7 +27,7 @@ def main() -> None:
     """Run the full ingestion pipeline: load → chunk → embed → index."""
 
     print("=" * 60)
-    print("Ontario Oversight CRAG Indexing Pipeline (All Sources)")
+    print("Police Oversight CRAG Indexing Pipeline (All Sources)")
     print("=" * 60)
 
     # Step 1 & 2: Load and Chunk all documents

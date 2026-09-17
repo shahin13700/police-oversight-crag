@@ -10,8 +10,6 @@ We test:
 4. get_embedding_dimension() returns the correct dimension
 5. embed() raises ValueError for empty input
 
-Branch: feature/embeddings-module
-Issue:  #4 — Sentence-transformers embedding module
 """
 
 import os

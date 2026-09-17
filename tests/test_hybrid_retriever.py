@@ -13,8 +13,6 @@ We test:
 Note: HybridRetriever tests require ChromaDB to be indexed.
 We use the isolated_chroma fixture to create a fresh test collection.
 
-Branch: feature/hybrid-retrieval-rrf
-Issue:  #7 — Hybrid retrieval with RRF fusion
 """
 
 import os
