@@ -7,18 +7,20 @@ a python-docx Document object for the chunker to process.
 This module does ONE thing only: open the file safely.
 All parsing and chunking logic lives in chunker.py.
 
-Branch: feature/ingestion-docx-chunker
-Issue:  #2 — CSPA .docx loader
 """
 
 import os
+import logging
 from pathlib import Path
 
 from docx import Document
+
 from docx.document import Document as DocumentType
 from dotenv import load_dotenv
 
 import pdfplumber
+
+logger = logging.getLogger(__name__)
 
 # Load environment variables from the .env file at the repo root.
 # This allows us to read RAW_DATA_DIR without hardcoding any paths.
@@ -91,7 +93,7 @@ def load_docx(filename: str) -> DocumentType:
 
     # Log a confirmation so the user knows the file loaded successfully.
     # This is helpful during development and debugging.
-    print(f"[loader] Successfully loaded '{filename}' ({len(doc.paragraphs)} paragraphs)")
+    logger.info(f"[loader] Successfully loaded '{filename}' ({len(doc.paragraphs)} paragraphs)")
 
     return doc
 
@@ -128,5 +130,5 @@ def load_pdf(filename: str) -> list[str]:
             else:
                 pages_text.append("")
 
-    print(f"[loader] Successfully loaded '{filename}' ({len(pages_text)} pages text extracted)")
+    logger.info(f"[loader] Successfully loaded '{filename}' ({len(pages_text)} pages text extracted)")
     return pages_text

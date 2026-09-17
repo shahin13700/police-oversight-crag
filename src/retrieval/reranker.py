@@ -9,8 +9,6 @@ Unlike a local cross-encoder which scores pairs one-by-one on CPU,
 the Cohere Rerank API processes all candidates in a single call with
 a model trained specifically for passage relevance ranking.
 
-Branch: feature/cross-encoder-reranker
-Issue:  #21 — Cross-encoder reranking node
 """
 
 import os

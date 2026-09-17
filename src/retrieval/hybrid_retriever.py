@@ -31,8 +31,6 @@ A document only found by one retriever still gets a partial score.
 
 This is the standard approach for hybrid search in production RAG systems.
 
-Branch: feature/hybrid-retrieval-rrf
-Issue:  #7 — Hybrid retrieval with RRF fusion
 """
 
 import os
@@ -138,7 +136,7 @@ class HybridRetriever:
 
         Args:
             chunks: Full list of LegislativeChunk objects — typically the
-                    1260 chunks from the CSPA document. BM25 builds its
+                    ~1,800 chunks across CSPA, Regulations, and LECA. BM25 builds its
                     index from these in memory.
         """
         # Read retrieval config from .env
@@ -149,10 +147,10 @@ class HybridRetriever:
         self._bm25 = BM25Retriever()
         self._bm25.build(chunks)
 
-        print(f"[hybrid] Retriever ready. "
-              f"BM25 corpus: {self._bm25.corpus_size} chunks, "
-              f"Vector top-k: {self._top_k_vector}, "
-              f"BM25 top-k: {self._top_k_bm25}")
+        logger.info(f"[hybrid] Retriever ready. "
+                    f"BM25 corpus: {self._bm25.corpus_size} chunks, "
+                    f"Vector top-k: {self._top_k_vector}, "
+                    f"BM25 top-k: {self._top_k_bm25}")
 
     def retrieve(self, query: str, top_k: int = 5) -> list[dict]:
         """

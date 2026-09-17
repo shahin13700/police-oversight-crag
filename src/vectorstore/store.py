@@ -20,8 +20,6 @@ ChromaDB has a built-in embedding function slot, but we pass
 embedding_function=None and supply our own embeddings. This keeps all
 embedding logic in src/embeddings/embedder.py and avoids tight coupling.
 
-Branch: feature/chromadb-vectorstore
-Issue:  #5 — ChromaDB vectorstore setup and indexing
 """
 
 import os
@@ -73,8 +71,8 @@ def get_collection() -> chromadb.Collection:
     )
 
     count = _collection.count()
-    print(f"[vectorstore] Opened collection '{collection_name}' "
-          f"({count} chunks indexed, persisted at '{persist_dir}')")
+    logger.info(f"[vectorstore] Opened collection '{collection_name}' "
+                f"({count} chunks indexed, persisted at '{persist_dir}')")
 
     return _collection
 
@@ -98,7 +96,7 @@ def index_chunks(chunks: list[LegislativeChunk]) -> None:
 
     collection = get_collection()
 
-    print(f"[vectorstore] Embedding {len(chunks)} chunks — this may take a minute...")
+    logger.info(f"[vectorstore] Embedding {len(chunks)} chunks — this may take a minute...")
 
     texts = [chunk.text for chunk in chunks]
     embeddings = embed(texts)
@@ -127,8 +125,8 @@ def index_chunks(chunks: list[LegislativeChunk]) -> None:
         metadatas=metadatas,
     )
 
-    print(f"[vectorstore] Successfully indexed {len(chunks)} chunks. "
-          f"Collection now has {collection.count()} total chunks.")
+    logger.info(f"[vectorstore] Successfully indexed {len(chunks)} chunks. "
+                f"Collection now has {collection.count()} total chunks.")
 
 
 def query(query_embedding: list[float], top_k: int = 5) -> list[dict]:
@@ -151,7 +149,7 @@ def query(query_embedding: list[float], top_k: int = 5) -> list[dict]:
     if collection.count() == 0:
         raise ValueError(
             "The ChromaDB collection is empty. "
-            "Run scripts/index_cspa.py first to index the CSPA document."
+            "Run scripts/index_all.py first to index the CSPA document."
         )
 
     results = collection.query(
@@ -170,7 +168,7 @@ def query(query_embedding: list[float], top_k: int = 5) -> list[dict]:
             "id": results["ids"][0][i],
             "text": results["documents"][0][i],
             "score": score,
-            "distance": distance,  # <--- ADD THIS LINE TO SATISFY THE TEST
+            "distance": distance,
             "section_number": metadata.get("section_number", ""),
             "section_title": metadata.get("section_title", ""),
             "part_name": metadata.get("part_name", ""),
@@ -198,4 +196,4 @@ def reset_collection() -> None:
     _client.delete_collection(collection_name)
     _collection = None
 
-    print(f"[vectorstore] Collection '{collection_name}' deleted and reset.")
+    logger.info(f"[vectorstore] Collection '{collection_name}' deleted and reset.")

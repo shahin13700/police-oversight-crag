@@ -1,7 +1,7 @@
 """
 src/api/main.py
 ------------------
-FastAPI backend for Ontario Oversight CRAG. Loads the NLP pipeline at startup and serves HTTP
+FastAPI backend for Police Oversight CRAG. Loads the NLP pipeline at startup and serves HTTP
 so the UI can decouple its rendering loop from the heavy model memory footprints.
 """
 
@@ -25,7 +25,7 @@ pipeline_state = {
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Load the entire legislative chunk corpus and compile LangGraph on boot
-    logger.info("Initializing Ontario Oversight CRAG ingestion pipeline...")
+    logger.info("Initializing Police Oversight CRAG ingestion pipeline...")
     chunks = run_ingestion()
     from src.vectorstore.store import get_collection, index_chunks
     collection = get_collection()
@@ -51,7 +51,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(
     title="Police Oversight CRAG API",
-    description="Backend inference and retrieval service for the Ontario Oversight CRAG UI.",
+    description="Backend inference and retrieval service for the Police Oversight CRAG UI.",
     lifespan=lifespan
 )
 

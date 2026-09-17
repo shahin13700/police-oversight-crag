@@ -19,13 +19,10 @@ ROUTING DECISIONS:
 - "retrieval"      → Question needs legislative sections to answer
 - "conversational" → Question can be answered without retrieval
 
-Branch: feature/langgraph-agent
-Issue:  #8 — LangGraph graph definition and Router node
 """
 
-import os
 import logging
-from langchain_groq import ChatGroq
+from src.agent.llm import get_chat_groq
 from langchain_core.messages import HumanMessage, SystemMessage
 
 from src.agent.state import AgentState
@@ -73,11 +70,7 @@ def route_question(state: AgentState) -> AgentState:
     question = state["question"]
     logger.info(f"[router] Classifying question: '{question[:60]}'")
 
-    llm = ChatGroq(
-        model=os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile"),
-        groq_api_key=os.getenv("GROQ_API_KEY"),
-        temperature=0,
-    )
+    llm = get_chat_groq(temperature=0)
 
     messages = [
         SystemMessage(content=ROUTER_SYSTEM_PROMPT),
@@ -96,6 +89,5 @@ def route_question(state: AgentState) -> AgentState:
         route = "retrieval"
 
     logger.info(f"[router] Route decision: {route}")
-    print(f"[router] '{question[:50]}...' → {route}")
 
     return {"route": route}

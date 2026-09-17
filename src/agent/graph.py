@@ -1,7 +1,7 @@
 """
 src/agent/graph.py
 ------------------
-Defines and compiles the LangGraph StateGraph for the Ontario Oversight CRAG pipeline.
+Defines and compiles the LangGraph StateGraph for the Police Oversight CRAG pipeline.
 
 GRAPH STRUCTURE (CRAG pattern):
                     
@@ -31,8 +31,6 @@ GRAPH STRUCTURE (CRAG pattern):
 The graph is compiled once at startup and reused for all queries.
 LangGraph handles the routing between nodes based on the edge functions.
 
-Branch: feature/langgraph-agent
-Issue:  #8 — LangGraph graph definition and Router node
 """
 
 import logging
@@ -171,7 +169,6 @@ def build_graph(chunks: list[LegislativeChunk]):
     # Compile and return the graph
     graph = workflow.compile()
 
-    print("[graph] LangGraph agent compiled successfully.")
     logger.info("[graph] LangGraph agent compiled.")
 
     return graph
@@ -202,7 +199,6 @@ def run_query(graph, question: str) -> dict:
         "route": None,
         "confidence_label": None,
         "confidence_score": 0.0,
-        "rrf_scores": []
     }
 
     result = graph.invoke(initial_state)
@@ -211,4 +207,5 @@ def run_query(graph, question: str) -> dict:
         "retrieved_chunks": result.get("retrieved_chunks", []),
         "confidence": result.get("confidence_label", "Low"),
         "confidence_score": result.get("confidence_score", 0.0),
+        "route": result.get("route"),
     }

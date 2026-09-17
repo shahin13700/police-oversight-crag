@@ -4,8 +4,6 @@ src/agent/nodes/retriever.py
 The Retriever node runs hybrid search (ChromaDB + BM25 + RRF) to find
 the most relevant CSPA legislative sections for the user's question.
 
-Branch: feature/langgraph-agent
-Issue:  #8 — LangGraph graph definition and Router node
 """
 
 import os
@@ -17,7 +15,7 @@ from src.retrieval.confidence import compute_confidence
 logger = logging.getLogger(__name__)
 
 # Module-level retriever singleton — built once, reused across queries
-# Building the BM25 index takes ~1 second for 1260 chunks, so we don't
+# Building the BM25 index takes ~1 second for ~1,800 chunks across CSPA, Regulations, and LECA, so we don't
 # want to rebuild it on every query
 _retriever: HybridRetriever | None = None
 
@@ -57,12 +55,9 @@ def retrieve_chunks(state: AgentState, chunks) -> AgentState:
     logger.info(f"[retriever] Retrieved {len(results)} chunks.")
     logger.info(f"[retriever] Confidence: {confidence_label} ({confidence_score:.2f})")
 
-    print(f"[retriever] Found {len(results)} chunks for query.")
-    print(f"[retriever] Confidence: {confidence_label}")
 
     return {
         "retrieved_chunks": results,
-        "rrf_scores": scores,
         "confidence_label": confidence_label,
         "confidence_score": confidence_score,
     }

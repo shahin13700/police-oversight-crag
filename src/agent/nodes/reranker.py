@@ -19,8 +19,6 @@ Inserting this node between Retriever and Grader means:
 POSITION IN GRAPH:
     Retriever → Reranker → Grader → ...
 
-Branch: feature/cross-encoder-reranker
-Issue:  #21 — Cross-encoder reranking node
 """
 
 import os
@@ -68,9 +66,6 @@ def rerank_chunks(state: AgentState) -> dict:
             f"[reranker_node] Top chunk after reranking: "
             f"{top_cite} (score={top_score:.4f})"
         )
-        print(
-            f"[reranker_node] Top after rerank: {top_cite} "
-            f"(Cohere score={top_score:.4f})"
-        )
+
 
     return {"retrieved_chunks": reranked}

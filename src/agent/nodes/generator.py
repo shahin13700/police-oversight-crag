@@ -13,13 +13,10 @@ sections (e.g. "CSPA s.11(1)"). The model is instructed to:
 
 This is the most critical requirement for legislative oversight QA.
 
-Branch: feature/langgraph-agent
-Issue:  #10 — Generator node with citation enforcement
 """
 
-import os
 import logging
-from langchain_groq import ChatGroq
+from src.agent.llm import get_chat_groq
 from langchain_core.messages import HumanMessage, SystemMessage
 
 from src.agent.state import AgentState
@@ -76,7 +73,7 @@ def generate_answer(state: AgentState) -> AgentState:
     """
     Generate a cited answer using the retrieved legislative sections.
 
-    Formats the retrieved chunks as context, then calls Gemini with a
+    Formats the retrieved chunks as context, then calls Groq with a
     strict system prompt that enforces citation requirements.
 
     Args:
@@ -111,11 +108,7 @@ QUESTION: {question}
 
 Please answer based only on the sections provided above, with citations."""
 
-    llm = ChatGroq(
-        model=os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile"),
-        groq_api_key=os.getenv("GROQ_API_KEY"),
-        temperature=0.1,
-    )
+    llm = get_chat_groq(temperature=0.1)
 
     messages = [
         SystemMessage(content=GENERATOR_SYSTEM_PROMPT),
@@ -126,7 +119,6 @@ Please answer based only on the sections provided above, with citations."""
     answer = response.content.strip()
 
     logger.info(f"[generator] Answer generated ({len(answer)} chars).")
-    print(f"[generator] Answer generated ({len(answer.split())} words).")
 
     return {"answer": answer,
             "confidence_label": state.get("confidence_label"),

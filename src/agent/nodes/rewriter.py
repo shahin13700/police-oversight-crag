@@ -17,13 +17,10 @@ We cap rewrites at 2 to prevent infinite loops. After 2 failed
 rewrites, we pass whatever chunks we have to the generator anyway
 with a note that the answer may be incomplete.
 
-Branch: feature/langgraph-agent
-Issue:  #9 — Relevance Grader and Query Rewriter nodes
 """
 
-import os
 import logging
-from langchain_groq import ChatGroq
+from src.agent.llm import get_chat_groq
 from langchain_core.messages import HumanMessage, SystemMessage
 
 from src.agent.state import AgentState
@@ -67,17 +64,12 @@ def rewrite_query(state: AgentState) -> AgentState:
             f"[rewriter] Max rewrites ({MAX_REWRITES}) reached. "
             "Forcing generator with available chunks."
         )
-        print(f"[rewriter] Max rewrites reached — proceeding with available chunks.")
         # Force relevance_passed=True so we don't loop forever
         return {"relevance_passed": True, "rewrite_count": rewrite_count}
 
     logger.info(f"[rewriter] Rewriting query (attempt {rewrite_count + 1}): '{question[:60]}'")
 
-    llm = ChatGroq(
-        model=os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile"),
-        groq_api_key=os.getenv("GROQ_API_KEY"),
-        temperature=0.3,
-    )
+    llm = get_chat_groq(temperature=0.3)
 
     messages = [
         SystemMessage(content=REWRITER_SYSTEM_PROMPT),
@@ -88,7 +80,6 @@ def rewrite_query(state: AgentState) -> AgentState:
     rewritten = response.content.strip()
 
     logger.info(f"[rewriter] Rewritten to: '{rewritten[:60]}'")
-    print(f"[rewriter] '{question[:40]}' → '{rewritten[:40]}'")
 
     return {
         "question": rewritten,

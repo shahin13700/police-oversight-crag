@@ -23,8 +23,6 @@ Unlike ChromaDB, BM25 doesn't need to persist to disk. The index rebuilds
 from the chunk list in under 1 second, so we rebuild it fresh each time
 the app starts. This avoids cache invalidation issues if chunks change.
 
-Branch: feature/hybrid-retrieval-rrf
-Issue:  #6 — BM25 index builder
 """
 
 import re
@@ -124,7 +122,6 @@ class BM25Retriever:
         self._bm25 = BM25Okapi(tokenized_corpus)
         self._is_built = True
 
-        print(f"[bm25] Index built over {len(chunks)} chunks.")
         logger.info(f"[bm25] Index built over {len(chunks)} chunks.")
 
     def search(self, query: str, top_k: int = 10) -> list[dict]:

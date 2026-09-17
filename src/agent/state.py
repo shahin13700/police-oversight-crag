@@ -9,8 +9,6 @@ makes the state explicit and type-safe — every node knows exactly what fields
 are available and what type they are. This prevents bugs from typos or
 missing fields that would otherwise only surface at runtime.
 
-Branch: feature/langgraph-agent
-Issue:  #8 — LangGraph graph definition and Router node
 """
 
 from typing import TypedDict, Optional
@@ -47,4 +45,3 @@ class AgentState(TypedDict):
     route: Optional[str]
     confidence_label: Annotated[str, take_latest]
     confidence_score: Annotated[float, take_latest]
-    rrf_scores: list[float]

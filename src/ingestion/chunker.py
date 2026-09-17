@@ -24,14 +24,15 @@ STYLES FOUND IN CSPA .docx:
 - 'definition' → Definition entry
 - 'paragraph'  → Sub-items (a), (b), (c)...
 
-Branch: feature/ingestion-docx-chunker
-Issue:  #3 — Section-aware legislative chunker
 """
 
+import logging
 import re
 from dataclasses import dataclass, field
 from typing import Optional
 from docx.document import Document as DocumentType
+
+logger = logging.getLogger(__name__)
 
 
 # ---------------------------------------------------------------------------
@@ -257,13 +258,13 @@ def chunk_document(
 
     if chunks:
         word_counts = [len(c.text.split()) for c in chunks]
-        print(
+        logger.info(
             f"[chunker] Produced {len(chunks)} chunks from '{source_doc}'\n"
             f"          Smallest: {min(word_counts)} words | "
             f"Largest: {max(word_counts)} words | "
             f"Average: {sum(word_counts) // len(word_counts)} words"
         )
     else:
-        print(f"[chunker] WARNING: No chunks produced from '{source_doc}'")
+        logger.warning(f"[chunker] WARNING: No chunks produced from '{source_doc}'")
 
     return chunks

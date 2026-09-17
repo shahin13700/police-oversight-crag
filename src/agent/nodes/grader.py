@@ -17,13 +17,10 @@ The grader asks Groq (llama-3.3-70b-versatile) to evaluate each chunk and decide
 
 This is the core of the CRAG (Corrective RAG) pattern.
 
-Branch: feature/langgraph-agent
-Issue:  #9 — Relevance Grader and Query Rewriter nodes
 """
 
-import os
 import logging
-from langchain_groq import ChatGroq
+from src.agent.llm import get_chat_groq
 from langchain_core.messages import HumanMessage, SystemMessage
 
 from src.agent.state import AgentState
@@ -57,11 +54,7 @@ def grade_chunks(state: AgentState) -> AgentState:
 
     logger.info(f"[grader] Grading {len(chunks)} chunks for relevance.")
 
-    llm = ChatGroq(
-        model=os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile"),
-        groq_api_key=os.getenv("GROQ_API_KEY"),
-        temperature=0,
-    )
+    llm = get_chat_groq(temperature=0)
 
     relevant_count = 0
     min_relevant = 2  # require at least 2 relevant chunks to pass
@@ -90,6 +83,5 @@ def grade_chunks(state: AgentState) -> AgentState:
         f"[grader] {relevant_count}/{len(chunks)} relevant. "
         f"Passed: {relevance_passed}"
     )
-    print(f"[grader] {relevant_count} relevant chunks found. Passed: {relevance_passed}")
 
     return {"relevance_passed": relevance_passed}

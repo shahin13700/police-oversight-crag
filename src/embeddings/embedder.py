@@ -8,13 +8,12 @@ WHY OPENROUTER API:
 Offloading embeddings to an API saves local memory and compute time.
 We use openai/text-embedding-3-small (1536d) for embeddings.
 
-Branch: feature/embeddings-module
-Issue:  #4 — Sentence-transformers embedding module
 """
 
 import os
 import logging
 import requests
+import time
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -76,7 +75,6 @@ def embed(texts: list[str]) -> list[list[float]]:
     
     # Batch documents before sending (reduced to 20 to prevent token limits)
     batch_size = 20
-    import time
     for i in range(0, len(texts), batch_size):
         batch = texts[i:i + batch_size]
         payload = {
@@ -112,7 +110,8 @@ def embed(texts: list[str]) -> list[list[float]]:
         all_embeddings.extend(batch_embeddings)
         
         # Minor sleep to avoid rate limiting
-        time.sleep(0.5)
+        if i + batch_size < len(texts):
+            time.sleep(0.5)
 
     return all_embeddings
 
